@@ -1,5 +1,5 @@
 ---
-import { about, skills } from '../data/profile';
+import { about, skills, interests } from '../data/profile';
 ---
 
 <section class="section container" id="about" aria-labelledby="about-heading">
@@ -23,6 +23,22 @@ import { about, skills } from '../data/profile';
             </ul>
           </div>
         ))}
+      </div>
+    )
+  }
+
+  {
+    interests.length > 0 && (
+      <div class="interests">
+        <h3 class="skills__label">Beyond code</h3>
+        <ul class="interests__list">
+          {interests.map((item) => (
+            <li class="tag tag--accent">
+              {item.name}
+              {item.note && <span class="tag__note">{item.note}</span>}
+            </li>
+          ))}
+        </ul>
       </div>
     )
   }

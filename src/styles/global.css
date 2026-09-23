@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    Global stylesheet
    --------------------------------------------------------------------------
    Hand-written CSS, no framework. Design tokens live in :root so you can
@@ -485,13 +485,17 @@ p {
   margin-bottom: var(--space-2);
 }
 
-/* Personal motto, sitting directly under the name. */
+/* Personal motto. LaTeX-quote styling: an accent rule down the left with a
+   small indent, so it reads as a quotation rather than one more line of body
+   text. */
 .hero__signature {
   max-width: 34rem;
+  margin-bottom: var(--space-4);
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--accent);
   font-size: 1.0625rem;
   font-style: italic;
   color: var(--text-soft);
-  margin-bottom: var(--space-3);
 }
 
 /* Optional Chinese name shown next to the main name. */
@@ -745,6 +749,33 @@ p {
   border-color: transparent;
   color: var(--accent);
   font-weight: 550;
+}
+
+/* Secondary text inside a chip, e.g. the "Real Madrid" in "Football". */
+.tag__note {
+  margin-left: 0.4em;
+  font-weight: 400;
+  color: var(--text-faint);
+}
+
+.tag__note::before {
+  content: "·";
+  margin-right: 0.35em;
+  opacity: 0.6;
+}
+
+/* Interests sit below the skills, behind a rule, because they answer a
+   different question: not what I can do, but who I am. */
+.interests {
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+}
+
+.interests__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
 }
 
 /* ==========================================================================
