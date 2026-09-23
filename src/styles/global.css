@@ -498,6 +498,20 @@ p {
   color: var(--text-soft);
 }
 
+/* Attribution line for the motto. <cite> is the right element for a work
+   title; the em dash comes from CSS so the data file stays clean. */
+.hero__signature-source {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: 0.875rem;
+  font-style: normal;
+  color: var(--text-faint);
+}
+
+.hero__signature-source::before {
+  content: "— ";
+}
+
 /* Optional Chinese name shown next to the main name. */
 .hero__name-local {
   font-size: 0.5em;
@@ -536,6 +550,22 @@ p {
   font-size: 0.875rem;
   color: var(--text-faint);
   margin-bottom: var(--space-5);
+}
+
+/* Right-hand column of the hero: avatar above the fact card. */
+.hero__aside {
+  display: grid;
+  gap: var(--space-5);
+  justify-items: start;
+}
+
+.hero__avatar {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  object-fit: cover;
 }
 
 /* --------------------------------------------------------------------------
@@ -764,9 +794,10 @@ p {
   opacity: 0.6;
 }
 
-/* Interests sit below the skills, behind a rule, because they answer a
-   different question: not what I can do, but who I am. */
-.interests {
+/* Trailing block inside About (interests, uses): behind a rule, because these
+   answer a different question from the skills above — not what I can do, but
+   who I am and what I work with. */
+.about__block {
   margin-top: var(--space-6);
   padding-top: var(--space-6);
   border-top: 1px solid var(--border);
@@ -776,6 +807,31 @@ p {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
+}
+
+/* Tool list: a definition list laid out as label / value rows. dt and dd are
+   direct grid children, so no wrapper elements are needed. */
+.uses {
+  display: grid;
+  gap: var(--space-2) var(--space-5);
+  margin: 0;
+}
+
+@media (min-width: 34rem) {
+  .uses {
+    grid-template-columns: 8rem 1fr;
+  }
+}
+
+.uses__label {
+  font-size: 0.875rem;
+  color: var(--text-faint);
+}
+
+.uses__value {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--text);
 }
 
 /* ==========================================================================
@@ -1002,6 +1058,17 @@ p {
   flex-wrap: wrap;
   gap: var(--space-2);
   margin-top: var(--space-3);
+}
+
+/* Contextual links on a timeline entry, e.g. the blog that came out of a
+   period of contest programming. */
+.timeline__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-3);
+  font-size: 0.875rem;
+  font-weight: 550;
 }
 
 /* ==========================================================================

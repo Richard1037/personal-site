@@ -1,5 +1,5 @@
 ---
-import { about, skills, interests } from '../data/profile';
+import { about, skills, interests, uses } from '../data/profile';
 ---
 
 <section class="section container" id="about" aria-labelledby="about-heading">
@@ -17,9 +17,16 @@ import { about, skills, interests } from '../data/profile';
           <div>
             <h3 class="skills__label">{group.label}</h3>
             <ul class="skills__list">
-              {group.items.map((item) => (
-                <li class="tag">{item}</li>
-              ))}
+              {group.items.map((item) => {
+                // 允许两种写法：字符串，或者带 note 的对象
+                const skill = typeof item === 'string' ? { name: item } : item;
+                return (
+                  <li class="tag">
+                    {skill.name}
+                    {skill.note && <span class="tag__note">{skill.note}</span>}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}
@@ -29,7 +36,7 @@ import { about, skills, interests } from '../data/profile';
 
   {
     interests.length > 0 && (
-      <div class="interests">
+      <div class="about__block">
         <h3 class="skills__label">Beyond code</h3>
         <ul class="interests__list">
           {interests.map((item) => (
@@ -39,6 +46,22 @@ import { about, skills, interests } from '../data/profile';
             </li>
           ))}
         </ul>
+      </div>
+    )
+  }
+
+  {
+    uses.length > 0 && (
+      <div class="about__block">
+        <h3 class="skills__label">Uses</h3>
+        <dl class="uses">
+          {uses.map((item) => (
+            <>
+              <dt class="uses__label">{item.label}</dt>
+              <dd class="uses__value">{item.value}</dd>
+            </>
+          ))}
+        </dl>
       </div>
     )
   }

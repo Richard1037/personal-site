@@ -17,7 +17,17 @@ const hasFacts = profile.facts.length > 0;
         {profile.nameLocal && <span class="hero__name-local">{profile.nameLocal}</span>}
       </h1>
 
-      {profile.signature && <p class="hero__signature">{profile.signature}</p>}
+      {
+        profile.signature && (
+          <p class="hero__signature">
+            {profile.signature}
+            {profile.signatureSource && (
+              <cite class="hero__signature-source">{profile.signatureSource}</cite>
+            )}
+          </p>
+        )
+      }
+
       <p class="hero__subheadline">{profile.subheadline}</p>
 
       {
@@ -40,18 +50,30 @@ const hasFacts = profile.facts.length > 0;
       }
     </div>
 
-    <!-- 右栏：分类信息卡。内容与增减都在 profile.ts 的 facts 里。 -->
-    {
-      hasFacts && (
-        <dl class="facts">
-          {profile.facts.map((fact) => (
-            <div class="facts__row">
-              <dt class="facts__label">{fact.label}</dt>
-              <dd class="facts__value">{fact.value}</dd>
-            </div>
-          ))}
-        </dl>
-      )
-    }
+    <!--
+      右栏：头像 + 分类信息卡。
+      头像的 alt 故意留空——它就是装饰，旁边紧接着就是姓名，
+      让屏幕阅读器再念一遍"头像"只是噪音。
+    -->
+    <div class="hero__aside">
+      {
+        profile.avatar && (
+          <img class="hero__avatar" src={profile.avatar} alt="" width="256" height="256" />
+        )
+      }
+
+      {
+        hasFacts && (
+          <dl class="facts">
+            {profile.facts.map((fact) => (
+              <div class="facts__row">
+                <dt class="facts__label">{fact.label}</dt>
+                <dd class="facts__value">{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+        )
+      }
+    </div>
   </div>
 </section>

@@ -39,6 +39,16 @@ const kindLabels: Record<ExperienceKind, string> = {
               ))}
             </ul>
           )}
+
+          {item.links && item.links.length > 0 && (
+            <div class="timeline__links">
+              {item.links.map((link) => (
+                <a class="link-arrow" href={link.url} target="_blank" rel="noopener">
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          )}
         </article>
       ))
     }

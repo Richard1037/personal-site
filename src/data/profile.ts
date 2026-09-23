@@ -59,11 +59,21 @@ export interface Experience {
   description: string;
   /** 可选的关键词标签 */
   tags?: string[];
+  /** 可选的相关链接，例如那段时间留下的博客或作品 */
+  links?: Link[];
+}
+
+/** 一项技能。可以只写名字，也可以带一个补充说明。 */
+export interface Skill {
+  name: string;
+  /** 补充说明，会以更淡的颜色显示在同一个标签里 */
+  note?: string;
 }
 
 export interface SkillGroup {
   label: string;
-  items: string[];
+  /** 字符串写法等价于 { name: '...' }，只写名字时用它更省事。 */
+  items: (string | Skill)[];
 }
 
 /* ==========================================================================
@@ -86,6 +96,16 @@ export const profile = {
 
   /** 个性签名，显示在姓名正下方 */
   signature: 'But I still think they are flowers',
+
+  /** 签名出处。留空则不显示。 */
+  signatureSource: 'Flower Dance, DJ Okawari',
+
+  /**
+   * 头像路径。图片放在 public/ 目录里，这里写以 / 开头的路径。
+   * 留空字符串则不显示头像。建议先把图片缩到 256×256 再放进来，
+   * 否则一张大图会拖垮整个站点的加载体积。
+   */
+  avatar: '/avatar.jpg',
 
   /** 你的"一句话价值主张"——全站最重要的一句。 */
   subheadline:
@@ -150,7 +170,7 @@ export const about: string[] = [
 export const skills: SkillGroup[] = [
   {
     label: 'Languages',
-    items: ['C++', 'Python'],
+    items: [{ name: 'C++', note: 'primary' }, 'Python'],
   },
   {
     label: 'Algorithms',
@@ -187,6 +207,21 @@ export interface Interest {
 export const interests: Interest[] = [
   { name: 'Gym', note: 'still a beginner' },
   { name: 'Football', note: 'Real Madrid' },
+];
+
+/** 「我在用什么」的一行。 */
+export interface UseItem {
+  label: string;
+  value: string;
+}
+
+/**
+ * 工具清单。很常见的个人站栏目，成本极低但对同专业的人信息量很大，
+ * 也特别容易成为别人搭话的由头。不用的东西就别列。
+ */
+export const uses: UseItem[] = [
+  { label: 'Editor', value: 'VS Code' },
+  { label: 'Note-taking', value: 'OneNote, handwritten on a Gaoman tablet' },
 ];
 
 /* ==========================================================================
@@ -301,6 +336,12 @@ export const experiences: Experience[] = [
       knowledge of the algorithms and data structures on the NOI syllabus, everything
       except link-cut trees, which I never got round to.`,
     tags: ['Algorithms', 'C++'],
+    links: [
+      {
+        label: 'Contest write-ups on my blog',
+        url: 'https://www.cnblogs.com/Richardwhr',
+      },
+    ],
   },
 ];
 
