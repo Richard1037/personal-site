@@ -4,16 +4,18 @@
  *
  *  改这里的内容 -> 提交到 GitHub -> 网站自动更新。不需要碰任何布局代码。
  *
- *  标了 TODO 的地方需要你确认或补全。标了 DRAFT 的地方是我代笔的初稿，
- *  请务必读一遍、改成你自己的话——别人写的自我描述放在你的主页上，
- *  一旦被追问细节会很难受。
+ *  下面每个字段都有中文注释说明用途。想加实习/科研/竞赛经历，照抄
+ *  `experiences` 里现成那条的格式，加到数组最前面即可。
  * ============================================================================
  */
 
-/** 一个外部链接（GitHub、演示地址、论文、公司官网……）。 */
+/** 一个联系方式或外部链接。 */
 export interface Link {
   label: string;
+  /** 目标地址。留空字符串 '' 则渲染为不可点击的标签（例如微信号）。 */
   url: string;
+  /** 鼠标悬停 / 键盘聚焦时显示的具体内容：邮箱地址、GitHub 主页、微信号等。 */
+  hint?: string;
 }
 
 /** 一个项目。 */
@@ -74,20 +76,19 @@ export const profile = {
   /** 中文名，显示在主标题旁边的小字；不需要就设为 '' */
   nameLocal: '汪宏睿',
 
-  /**
-   * TODO 确认：GSAI 既有本科也有人工智能硕士/博士。英文里最好写清楚是哪一种，
-   * 招聘方很在意这个区别。改成下面二者之一：
-   *   'BSc in Artificial Intelligence · Renmin University of China'
-   *   'MSc in Artificial Intelligence · Renmin University of China'
-   */
-  headline: 'Artificial Intelligence · Renmin University of China',
+  /** 学位 + 学校，显示在姓名下方 */
+  headline: 'BSc in Artificial Intelligence · Renmin University of China',
 
-  /**
-   * DRAFT 你的"一句话价值主张"。我没法替你决定方向，这是我根据你的项目
-   * 和"still exploring"写的版本——读一遍，不准确就自己改。
-   */
+  /** 你的"一句话价值主张"——全站最重要的一句。 */
   subheadline:
     'First-year AI student in Beijing, building small dependency-free web tools while I work out where in AI to go deep.',
+
+  /**
+   * 个性签名，显示在姓名正下方。
+   * 注意：你给的是 "shill"，我按拼写错误处理成了 "still"。如果原意就是 shill，
+   * 改回来即可。
+   */
+  signature: 'But I still think they are flowers',
 
   location: 'Beijing, China',
 
@@ -102,6 +103,12 @@ export const profile = {
   /** 页脚版权年份起点 */
   since: 2026,
 
+  /**
+   * 页脚显示的"最后更新"日期。改完内容顺手改一下这里——访客据此判断
+   * 这个站点是否还活着。手动维护比自动取构建时间更有意义。
+   */
+  lastUpdated: 'September 2026',
+
   /** 联系板块的引导语。1~2 句，说明你希望收到什么样的联系。 */
   contactNote:
     "I'm happy to hear about internships, research opportunities, or just to compare notes on a project. Email is the fastest way to reach me.",
@@ -112,8 +119,7 @@ export const profile = {
    ========================================================================== */
 
 /**
- * DRAFT 下面两段是我根据你的信息代笔的。请务必逐句读一遍，把不像你说的话改掉。
- * 好的自我介绍只需要回答三件事：你是谁、你在做什么、你为什么在意它。
+ * 自我介绍。好的版本只需要回答三件事：你是谁、你在做什么、你为什么在意它。
  */
 export const about: string[] = [
   `I'm a first-year student at the Gaoling School of Artificial Intelligence,
@@ -121,21 +127,31 @@ export const about: string[] = [
    I simply wanted to exist — a place to keep half-formed ideas, a card that says
    who I am without a framework doing the talking.`,
 
-  `I keep coming back to the constraint of zero dependencies: plain HTML, CSS and
-   JavaScript, no build step, one file you can open by double-clicking it. It forces
-   you to understand what you are actually shipping. Lately I'm spending more time on
-   the AI side of my degree, looking for the problem I want to stay with.`,
+  `Lately I'm spending more time on the AI side of my degree, looking for the problem
+   I want to stay with.`,
 ];
 
 /**
- * TODO 技能。C++ 和 Python 是你自己列的；Web 一组是依据你两个仓库实际使用的
- * 技术补的（都是原生实现，没有框架）。不确定该不该写就先删掉那一组——
- * 写了就要经得起追问。
+ * 技能分组。按熟练度排序；写了就要经得起追问。
+ * Algorithms 一组来自算法竞赛训练——写的是广度而不是奖项，因为
+ * "会哪些算法"比"拿过什么奖"更能说明问题，也更经得起追问。
  */
 export const skills: SkillGroup[] = [
   {
     label: 'Languages',
     items: ['C++', 'Python'],
+  },
+  {
+    label: 'Algorithms',
+    items: [
+      'Data structures',
+      'Graph theory',
+      'Dynamic programming',
+      'Strings',
+      'Number theory',
+      'Combinatorics',
+      'Computational geometry',
+    ],
   },
   {
     label: 'Web (no frameworks)',
@@ -144,10 +160,42 @@ export const skills: SkillGroup[] = [
 ];
 
 /* ==========================================================================
-   3. 项目作品集
+   3. 最近在做什么（Now）
+   --------------------------------------------------------------------------
+   参考 nownownow.com 的惯例：一小段"我最近在推进什么"。对经历还不多的人
+   特别合适——它把"经历少"变成"正在长"。更新成本也低，改一两句话就行。
+   改完记得同步更新上面的 lastUpdated。
+   ========================================================================== */
+
+export const now = {
+  /** 这段内容的更新时间。改内容时顺手改这里。 */
+  updated: 'September 2026',
+
+  /** 一两段短文，说清你最近在忙什么。 */
+  body: [
+    `I've been moving my coursework into the cloud — notes, slides, past papers —
+     nothing on paper if I can help it. The point isn't tidiness so much as making
+     the material still findable years from now, by me and by whoever else needs it.`,
+
+    `The collection is public on GitHub, and it gets more useful as it grows.
+     Corrections, extra material and better organisation are all welcome — open an
+     issue on the repository, or send a pull request if you'd rather just add it.`,
+  ],
+
+  /** 相关链接。不需要就设为空数组 []。 */
+  links: [
+    {
+      label: 'Course-Resources on GitHub',
+      url: 'https://github.com/Richard1037/Course-Resources',
+    },
+  ],
+};
+
+/* ==========================================================================
+   4. 项目作品集
    --------------------------------------------------------------------------
    三个项目均取自你的 GitHub 仓库，描述由我依据各仓库 README 改写。
-   建议自己核对一遍技术细节，确保每句话你都能在面试里展开讲。
+   建议自己核对一遍技术细节——描述里的每句话你都应该能展开讲。
    ========================================================================== */
 
 export const projects: Project[] = [
@@ -195,36 +243,48 @@ export const projects: Project[] = [
 ];
 
 /* ==========================================================================
-   4. 经历时间线
+   5. 经历时间线
    --------------------------------------------------------------------------
-   你说经历暂无，所以这里只放了教育背景（这是事实，不是编的）。
-   之后有实习 / 科研 / 竞赛，往数组最前面添加即可，格式照抄下面这条。
+   你说经历暂无，所以这里只放了教育背景和算法竞赛背景（都是事实，不是编的）。
+   之后有实习 / 科研，往数组最前面添加即可，格式照抄现成那条。
    ========================================================================== */
 
 export const experiences: Experience[] = [
   {
     kind: 'education',
-    /**
-     * TODO 确认学位类型和入学年份：
-     *   本科 -> 'BSc in Artificial Intelligence'，起止 '2026 – 2030 (expected)'
-     *   硕士 -> 'MSc in Artificial Intelligence'，起止 '2026 – 2029 (expected)'
-     */
-    title: 'Artificial Intelligence',
+    title: 'BSc in Artificial Intelligence',
     org: 'Gaoling School of Artificial Intelligence, Renmin University of China',
-    period: '2026 – Present',
+    period: '2026 – 2030 (expected)',
     description: `Coursework in mathematics, programming and the foundations of machine
       learning, alongside self-directed work on web tools.`,
     tags: ['Beijing'],
   },
+  {
+    // 三个奖项合并成了一条：你想表达的是"有算法底子"，而不是陈列荣誉。
+    // 想恢复成三条独立奖项，照抄这条的格式拆开即可。
+    kind: 'competition',
+    title: 'Competitive programming',
+    org: 'NOIP · WC · NOI',
+    period: '2024 – 2025',
+    description: `Two-time NOIP first prize, plus bronze at the national winter camp and
+      the national finals. I don't compete any more — what I kept from it is a working
+      knowledge of the algorithms and data structures on the NOI syllabus, everything
+      except link-cut trees, which I never got round to.`,
+    tags: ['Algorithms', 'C++'],
+  },
 ];
 
 /* ==========================================================================
-   5. 联系方式
+   6. 联系方式
    ========================================================================== */
 
 export const contactLinks: Link[] = [
-  { label: 'Email', url: 'mailto:hongrui_w@outlook.com' },
-  { label: 'GitHub', url: 'https://github.com/Richard1037' },
+  { label: 'Email', url: 'mailto:hongrui_w@outlook.com', hint: 'hongrui_w@outlook.com' },
+  // 微信号，没有可跳转的地址，鼠标悬停显示 ID
+  { label: 'WeChat', url: '', hint: 'Richard_1037' },
+  { label: 'GitHub', url: 'https://github.com/Richard1037', hint: 'github.com/Richard1037' },
+  // 首屏只显示前 3 个，所以 Blog 出现在底部的 Contact 区
+  { label: 'Blog', url: 'https://www.cnblogs.com/Richardwhr', hint: 'cnblogs.com/Richardwhr' },
 ];
 
 /** 搜索引擎和社交平台分享时显示的描述。 */

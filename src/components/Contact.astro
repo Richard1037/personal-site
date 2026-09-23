@@ -1,5 +1,6 @@
 ---
 import { profile, contactLinks } from '../data/profile';
+import ContactLink from './ContactLink.astro';
 ---
 
 <section class="section container contact" id="contact" aria-labelledby="contact-heading">
@@ -8,17 +9,6 @@ import { profile, contactLinks } from '../data/profile';
   <p class="contact__text">{profile.contactNote}</p>
 
   <div class="contact__links">
-    {
-      contactLinks.map((link) => (
-        <a
-          class="button"
-          href={link.url}
-          rel={link.url.startsWith('http') ? 'me noopener' : undefined}
-          target={link.url.startsWith('http') ? '_blank' : undefined}
-        >
-          {link.label}
-        </a>
-      ))
-    }
+    {contactLinks.map((link) => <ContactLink link={link} />)}
   </div>
 </section>

@@ -1,9 +1,10 @@
 ---
 import { profile, contactLinks } from '../data/profile';
+import ContactLink from './ContactLink.astro';
 
-// The hero shows the first two contact links as buttons; the Contact section
-// at the bottom of the page shows all of them.
-const heroLinks = contactLinks.slice(0, 2);
+// 首屏显示前 3 个联系方式。想改变首屏展示哪些，调整 profile.ts 里
+// contactLinks 的顺序即可，这里不用改。
+const heroLinks = contactLinks.slice(0, 3);
 ---
 
 <section class="hero container" id="top">
@@ -11,6 +12,8 @@ const heroLinks = contactLinks.slice(0, 2);
     {profile.name}
     {profile.nameLocal && <span class="hero__name-local">{profile.nameLocal}</span>}
   </h1>
+
+  {profile.signature && <p class="hero__signature">{profile.signature}</p>}
 
   <p class="hero__headline">{profile.headline}</p>
   <p class="hero__subheadline">{profile.subheadline}</p>
@@ -31,14 +34,7 @@ const heroLinks = contactLinks.slice(0, 2);
     heroLinks.length > 0 && (
       <div class="hero__actions">
         {heroLinks.map((link, index) => (
-          <a
-            class:list={['button', index === 0 && 'button--primary']}
-            href={link.url}
-            rel={link.url.startsWith('http') ? 'me noopener' : undefined}
-            target={link.url.startsWith('http') ? '_blank' : undefined}
-          >
-            {link.label}
-          </a>
+          <ContactLink link={link} variant={index === 0 ? 'primary' : 'default'} />
         ))}
       </div>
     )

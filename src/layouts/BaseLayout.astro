@@ -38,9 +38,38 @@ const description = siteDescription;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
-    <!-- Tints the browser UI to match light/dark mode. -->
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0e1013" media="(prefers-color-scheme: dark)" />
+    <!-- Tints the browser UI (mobile address bar) to match the theme. The
+         inline script below keeps this in step with the toggle. -->
+    <meta name="theme-color" content="#ffffff" id="theme-color" />
+
+    <!--
+      Applies the stored theme before the first paint, so there is never a flash
+      of the wrong colours. This inline script is the only reason the site needs
+      any JavaScript at all; with scripts disabled everything else still works,
+      and the stylesheet falls back to the OS colour-scheme preference.
+    -->
+    <script is:inline>
+      (function () {
+        var stored = null;
+        try {
+          stored = localStorage.getItem('theme');
+        } catch (e) {
+          /* Some privacy modes throw on localStorage access. */
+        }
+
+        var prefersDark =
+          window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme =
+          stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+
+        document.documentElement.setAttribute('data-theme', theme);
+        // Reveals the theme toggle, which stays hidden without JavaScript.
+        document.documentElement.classList.add('js');
+
+        var meta = document.getElementById('theme-color');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0e1013' : '#ffffff');
+      })();
+    </script>
   </head>
 
   <body>
@@ -50,5 +79,27 @@ const description = siteDescription;
       <slot />
     </main>
     <Footer />
+
+    <script is:inline>
+      (function () {
+        var button = document.getElementById('theme-toggle');
+        if (!button) return;
+
+        button.addEventListener('click', function () {
+          var root = document.documentElement;
+          var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+
+          root.setAttribute('data-theme', next);
+          try {
+            localStorage.setItem('theme', next);
+          } catch (e) {
+            /* Ignore - the choice simply will not persist. */
+          }
+
+          var meta = document.getElementById('theme-color');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#0e1013' : '#ffffff');
+        });
+      })();
+    </script>
   </body>
 </html>

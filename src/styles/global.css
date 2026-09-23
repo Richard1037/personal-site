@@ -5,11 +5,12 @@
    restyle the whole site by editing a handful of variables.
 
    Sections:
-     1. Design tokens        6. Hero
-     2. Reset & base         7. About & skills
-     3. Layout helpers       8. Projects
-     4. Header & nav         9. Experience timeline
-     5. Skip link           10. Contact, footer, print
+     1. Design tokens         7. About & skills
+     2. Reset & base          8. Now
+     3. Layout helpers        9. Projects
+     4. Header & nav         10. Experience timeline
+     5. Skip link            11. Contact, footer, print
+     6. Hero
    ========================================================================== */
 
 /* ==========================================================================
@@ -17,16 +18,58 @@
    ========================================================================== */
 
 :root {
-  /* Colour — light theme (default) */
-  --bg: #ffffff;
-  --bg-soft: #f6f7f9;
-  --text: #15171c;
-  --text-soft: #5a616e;
-  --text-faint: #8b919d;
-  --border: #e4e6ea;
-  --accent: #2c5ce6;
-  --accent-soft: #eef2fe;
-  --accent-contrast: #ffffff;
+  /* --- Colour palette ----------------------------------------------------
+     Every colour is defined exactly once: a light variant (--l-*) and a dark
+     variant (--d-*). The "resolved" tokens below pick one of the two, and are
+     what the rest of this file actually uses. To restyle the whole site, edit
+     the palette — nothing else needs to change.
+     ---------------------------------------------------------------------- */
+
+  /* Light */
+  --l-bg: #ffffff;
+  --l-bg-soft: #f6f7f9;
+  --l-surface: #f7f8fa;
+  --l-surface-raised: #ffffff;
+  --l-text: #15171c;
+  --l-text-soft: #5a616e;
+  --l-text-faint: #8b919d;
+  --l-border: #e4e6ea;
+  --l-accent: #2c5ce6;
+  --l-accent-soft: #eef2fe;
+  --l-accent-contrast: #ffffff;
+  --l-grid: rgba(21, 23, 28, 0.055);
+
+  /* Dark */
+  --d-bg: #0e1013;
+  --d-bg-soft: #16191e;
+  --d-surface: #171a1f;
+  --d-surface-raised: #22262e;
+  --d-text: #e9ebef;
+  --d-text-soft: #a2a9b6;
+  --d-text-faint: #737a87;
+  --d-border: #262a31;
+  --d-accent: #7ea2ff;
+  --d-accent-soft: #1a2133;
+  --d-accent-contrast: #0e1013;
+  --d-grid: rgba(233, 235, 239, 0.08);
+
+  /* --- Resolved tokens: light by default --------------------------------- */
+  --bg: var(--l-bg);
+  --bg-soft: var(--l-bg-soft);
+  --surface: var(--l-surface);
+  --surface-raised: var(--l-surface-raised);
+  --text: var(--l-text);
+  --text-soft: var(--l-text-soft);
+  --text-faint: var(--l-text-faint);
+  --border: var(--l-border);
+  --accent: var(--l-accent);
+  --accent-soft: var(--l-accent-soft);
+  --accent-contrast: var(--l-accent-contrast);
+  --grid-line: var(--l-grid);
+
+  --grid-size: 3rem;
+
+  color-scheme: light;
 
   /* Typography */
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
@@ -60,18 +103,46 @@
   --transition: 160ms ease;
 }
 
+/* --- Switching to dark --------------------------------------------------
+   Two independent triggers. Because the palette above defines each colour
+   exactly once, only this short remapping is repeated — never the colours.
+
+     1. The visitor's OS setting, unless they explicitly chose light.
+     2. An explicit choice made with the theme toggle in the header.
+   ------------------------------------------------------------------------ */
+
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0e1013;
-    --bg-soft: #16191e;
-    --text: #e9ebef;
-    --text-soft: #a2a9b6;
-    --text-faint: #737a87;
-    --border: #262a31;
-    --accent: #7ea2ff;
-    --accent-soft: #1a2133;
-    --accent-contrast: #0e1013;
+  :root:not([data-theme='light']) {
+    --bg: var(--d-bg);
+    --bg-soft: var(--d-bg-soft);
+    --surface: var(--d-surface);
+    --surface-raised: var(--d-surface-raised);
+    --text: var(--d-text);
+    --text-soft: var(--d-text-soft);
+    --text-faint: var(--d-text-faint);
+    --border: var(--d-border);
+    --accent: var(--d-accent);
+    --accent-soft: var(--d-accent-soft);
+    --accent-contrast: var(--d-accent-contrast);
+    --grid-line: var(--d-grid);
+    color-scheme: dark;
   }
+}
+
+:root[data-theme='dark'] {
+  --bg: var(--d-bg);
+  --bg-soft: var(--d-bg-soft);
+  --surface: var(--d-surface);
+  --surface-raised: var(--d-surface-raised);
+  --text: var(--d-text);
+  --text-soft: var(--d-text-soft);
+  --text-faint: var(--d-text-faint);
+  --border: var(--d-border);
+  --accent: var(--d-accent);
+  --accent-soft: var(--d-accent-soft);
+  --accent-contrast: var(--d-accent-contrast);
+  --grid-line: var(--d-grid);
+  color-scheme: dark;
 }
 
 /* ==========================================================================
@@ -102,6 +173,43 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* --------------------------------------------------------------------------
+   Background: a slowly breathing grid
+   Drawn on a fixed pseudo-element sitting behind the page. Only `opacity`
+   animates, which the compositor handles cheaply — so covering the whole
+   viewport costs effectively nothing, unlike animating background-position.
+   -------------------------------------------------------------------------- */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  animation: grid-breathe 16s ease-in-out infinite;
+}
+
+/* Lift page content above the grid. The header is deliberately not listed: it
+   is already sticky and carries a higher z-index of its own. */
+main,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes grid-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 img,
@@ -242,6 +350,65 @@ p {
   background-color: var(--bg-soft);
 }
 
+/* Right-hand cluster of the header: navigation plus the theme toggle. */
+.site-header__end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Theme toggle
+   Hidden until JavaScript confirms it can work (the inline script in
+   BaseLayout adds `.js` to <html>), so it is never a dead control.
+   -------------------------------------------------------------------------- */
+
+.theme-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background-color: transparent;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition),
+    background-color var(--transition);
+}
+
+.js .theme-toggle {
+  display: inline-flex;
+}
+
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--text-faint);
+  background-color: var(--bg-soft);
+}
+
+.theme-toggle svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Show the icon for the theme you would switch TO. */
+.theme-toggle__moon {
+  display: none;
+}
+
+:root[data-theme='dark'] .theme-toggle__sun {
+  display: none;
+}
+
+:root[data-theme='dark'] .theme-toggle__moon {
+  display: block;
+}
+
 /* ==========================================================================
    5. Skip link (accessibility)
    ========================================================================== */
@@ -275,6 +442,15 @@ p {
 .hero__name {
   font-size: clamp(2.25rem, 6vw, 3.5rem);
   letter-spacing: -0.03em;
+  margin-bottom: var(--space-2);
+}
+
+/* Personal motto, sitting directly under the name. */
+.hero__signature {
+  max-width: 34rem;
+  font-size: 1.0625rem;
+  font-style: italic;
+  color: var(--text-soft);
   margin-bottom: var(--space-3);
 }
 
@@ -346,6 +522,7 @@ p {
    ========================================================================== */
 
 .button {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
@@ -375,6 +552,60 @@ p {
   background-color: color-mix(in srgb, var(--accent) 85%, black);
   border-color: color-mix(in srgb, var(--accent) 85%, black);
   color: var(--accent-contrast);
+}
+
+/* A contact chip with nowhere to go (a WeChat ID, say). Not clickable, but
+   focusable so keyboard users can reveal its tooltip too. */
+.button--static {
+  cursor: help;
+}
+
+/* --------------------------------------------------------------------------
+   Tooltips
+   Reveal the concrete value behind a chip — email address, WeChat ID, profile
+   URL. Pure CSS, driven by :hover and :focus, so it works without JavaScript
+   and on touch devices (tapping focuses the element).
+   -------------------------------------------------------------------------- */
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 0.55rem);
+  left: 50%;
+  z-index: 20;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--text);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.4;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(0.25rem);
+  transition: opacity var(--transition), transform var(--transition),
+    visibility var(--transition);
+  pointer-events: none;
+}
+
+/* Small arrow pointing down at the chip. */
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--text);
+}
+
+.button:hover .tooltip,
+.button:focus .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
 }
 
 /* ==========================================================================
@@ -437,7 +668,44 @@ p {
 }
 
 /* ==========================================================================
-   8. Projects
+   8. Now — a short, hand-updated note on current work
+   Convention borrowed from nownownow.com. Kept visually lighter than the
+   other sections on purpose: it is the one part of the page that goes stale,
+   so the date is shown and the styling does not shout.
+   ========================================================================== */
+
+.now__updated {
+  display: inline-block;
+  margin-left: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text-faint);
+  vertical-align: middle;
+}
+
+.now__body {
+  max-width: 40rem;
+  font-size: 1.0625rem;
+  color: var(--text-soft);
+}
+
+.now__body p + p {
+  margin-top: var(--space-4);
+}
+
+.now__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  font-size: 0.9375rem;
+  font-weight: 550;
+}
+
+/* ==========================================================================
+   9. Projects
    ========================================================================== */
 
 .projects {
@@ -446,16 +714,52 @@ p {
 }
 
 .project {
+  position: relative;
+  overflow: hidden;
   padding: var(--space-5);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  background-color: var(--bg);
+  background-color: var(--surface);
   transition: border-color var(--transition), transform var(--transition);
+}
+
+/* Hover wash. A gradient cannot be transitioned directly, so it lives on a
+   pseudo-element and only its opacity animates — something the compositor can
+   do cheaply, unlike animating background-position. */
+.project::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 16%, transparent),
+    color-mix(in srgb, var(--accent) 5%, transparent) 45%,
+    transparent 72%
+  );
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
+}
+
+.project:hover::before,
+.project:focus-within::before {
+  opacity: 1;
+}
+
+/* Keep card content above the wash. */
+.project > * {
+  position: relative;
+  z-index: 1;
 }
 
 .project:hover {
   border-color: var(--text-faint);
   transform: translateY(-2px);
+}
+
+/* Chips inside a card need to sit above the card's own surface colour. */
+.project .tag {
+  background-color: var(--surface-raised);
 }
 
 .project__top {
@@ -522,7 +826,7 @@ p {
 }
 
 /* ==========================================================================
-   9. Experience timeline
+   10. Experience timeline
    ========================================================================== */
 
 .timeline {
@@ -590,7 +894,7 @@ p {
 }
 
 /* ==========================================================================
-   10. Contact, footer, print
+   11. Contact, footer, print
    ========================================================================== */
 
 .contact {
