@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ============================================================================
  *  这是你更新网站时【唯一需要修改】的文件。
  *
@@ -121,7 +121,7 @@ export const profile = {
     { label: 'At', value: 'Renmin University of China' },
     { label: 'Based in', value: 'Beijing, China' },
     { label: 'Interested in', value: 'Algorithms and AI' },
-    { label: 'Personality', value: 'ESTJ' },
+    { label: 'MBTI', value: 'ESTJ' },
   ],
 
   /**
