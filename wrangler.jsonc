@@ -1,0 +1,21 @@
+{
+  // ---------------------------------------------------------------
+  // Cloudflare Workers configuration
+  //
+  // This site is 100% static, so there is deliberately NO `main` field:
+  // no Worker script runs, Cloudflare just serves the files in ./dist.
+  //
+  // `name` becomes your free URL: https://<name>.<your-subdomain>.workers.dev
+  // Change it to whatever you like (lowercase letters, digits, hyphens).
+  // ---------------------------------------------------------------
+  "name": "personal-site",
+
+  // Tells Cloudflare where the built static files live.
+  "assets": {
+    "directory": "./dist"
+  },
+
+  // Pins Cloudflare's runtime defaults to a fixed date so your site cannot
+  // break because of an unannounced platform change. Bump it deliberately.
+  "compatibility_date": "2026-09-23"
+}

@@ -1,0 +1,26 @@
+---
+import { profile } from '../data/profile';
+
+// Section anchors shown in the top navigation.
+// If you delete a section from index.astro, delete its entry here too.
+const navItems = [
+  { href: '#about', label: 'About' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-header__brand" href="#top">{profile.name}</a>
+
+    <nav class="site-nav" aria-label="Main">
+      {
+        navItems.map((item) => (
+          <a href={item.href}>{item.label}</a>
+        ))
+      }
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,51 @@
+---
+import { projects } from '../data/profile';
+
+// Featured projects float to the top; everything else is newest-first.
+// To reorder, either edit this comparator or just reorder the array in
+// src/data/profile.ts — the array order is otherwise preserved for ties.
+const ordered = [...projects].sort((a, b) => {
+  const featured = Number(Boolean(b.featured)) - Number(Boolean(a.featured));
+  if (featured !== 0) return featured;
+  return String(b.year).localeCompare(String(a.year));
+});
+---
+
+<section class="section container" id="projects" aria-labelledby="projects-heading">
+  <span class="eyebrow">Projects</span>
+  <h2 class="section__title" id="projects-heading">Things I've built</h2>
+
+  <div class="projects">
+    {
+      ordered.map((project) => (
+        <article class="project">
+          <div class="project__top">
+            <h3 class="project__name">{project.name}</h3>
+            <span class="project__year">{project.year}</span>
+          </div>
+
+          <p class="project__tagline">{project.tagline}</p>
+          <p class="project__description">{project.description}</p>
+
+          {project.tech.length > 0 && (
+            <ul class="project__tech">
+              {project.tech.map((item) => (
+                <li class="tag">{item}</li>
+              ))}
+            </ul>
+          )}
+
+          {project.links.length > 0 && (
+            <div class="project__links">
+              {project.links.map((link) => (
+                <a class="link-arrow" href={link.url} target="_blank" rel="noopener">
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          )}
+        </article>
+      ))
+    }
+  </div>
+</section>

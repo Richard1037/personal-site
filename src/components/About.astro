@@ -1,0 +1,29 @@
+---
+import { about, skills } from '../data/profile';
+---
+
+<section class="section container" id="about" aria-labelledby="about-heading">
+  <span class="eyebrow">About</span>
+  <h2 class="section__title" id="about-heading">A bit about me</h2>
+
+  <div class="about__body">
+    {about.map((paragraph) => <p>{paragraph}</p>)}
+  </div>
+
+  {
+    skills.length > 0 && (
+      <div class="skills">
+        {skills.map((group) => (
+          <div>
+            <h3 class="skills__label">{group.label}</h3>
+            <ul class="skills__list">
+              {group.items.map((item) => (
+                <li class="tag">{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    )
+  }
+</section>

@@ -1,0 +1,46 @@
+---
+import { profile, contactLinks } from '../data/profile';
+
+// The hero shows the first two contact links as buttons; the Contact section
+// at the bottom of the page shows all of them.
+const heroLinks = contactLinks.slice(0, 2);
+---
+
+<section class="hero container" id="top">
+  <h1 class="hero__name">
+    {profile.name}
+    {profile.nameLocal && <span class="hero__name-local">{profile.nameLocal}</span>}
+  </h1>
+
+  <p class="hero__headline">{profile.headline}</p>
+  <p class="hero__subheadline">{profile.subheadline}</p>
+
+  <div class="hero__meta">
+    <span class="hero__meta-item">{profile.location}</span>
+    {
+      profile.status && (
+        <span class="hero__meta-item">
+          <span class="status-dot" aria-hidden="true" />
+          {profile.status}
+        </span>
+      )
+    }
+  </div>
+
+  {
+    heroLinks.length > 0 && (
+      <div class="hero__actions">
+        {heroLinks.map((link, index) => (
+          <a
+            class:list={['button', index === 0 && 'button--primary']}
+            href={link.url}
+            rel={link.url.startsWith('http') ? 'me noopener' : undefined}
+            target={link.url.startsWith('http') ? '_blank' : undefined}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+    )
+  }
+</section>

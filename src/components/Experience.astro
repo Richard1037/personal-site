@@ -1,0 +1,46 @@
+---
+import { experiences, type ExperienceKind } from '../data/profile';
+
+// Human-readable label for each experience type.
+const kindLabels: Record<ExperienceKind, string> = {
+  work: 'Internship',
+  research: 'Research',
+  competition: 'Competition',
+  award: 'Award',
+  education: 'Education',
+};
+
+// Rendered in the order given in src/data/profile.ts — sort it there.
+---
+
+<section class="section container" id="experience" aria-labelledby="experience-heading">
+  <span class="eyebrow">Experience</span>
+  <h2 class="section__title" id="experience-heading">Where I've been</h2>
+
+  <div class="timeline">
+    {
+      experiences.map((item) => (
+        <article class="timeline__item" data-kind={item.kind}>
+          <div class="timeline__header">
+            <h3 class="timeline__title">{item.title}</h3>
+            <span class="timeline__org">{item.org}</span>
+          </div>
+
+          <p class="timeline__period">
+            {item.period} · {kindLabels[item.kind]}
+          </p>
+
+          <p class="timeline__description">{item.description}</p>
+
+          {item.tags && item.tags.length > 0 && (
+            <ul class="timeline__tags">
+              {item.tags.map((tag) => (
+                <li class="tag">{tag}</li>
+              ))}
+            </ul>
+          )}
+        </article>
+      ))
+    }
+  </div>
+</section>

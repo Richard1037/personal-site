@@ -1,0 +1,24 @@
+---
+import { profile, contactLinks } from '../data/profile';
+---
+
+<section class="section container contact" id="contact" aria-labelledby="contact-heading">
+  <span class="eyebrow">Contact</span>
+  <h2 class="contact__title" id="contact-heading">Let's talk</h2>
+  <p class="contact__text">{profile.contactNote}</p>
+
+  <div class="contact__links">
+    {
+      contactLinks.map((link) => (
+        <a
+          class="button"
+          href={link.url}
+          rel={link.url.startsWith('http') ? 'me noopener' : undefined}
+          target={link.url.startsWith('http') ? '_blank' : undefined}
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </div>
+</section>
