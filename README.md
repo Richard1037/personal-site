@@ -68,14 +68,18 @@ npm run preview    # 本地预览构建产物（模拟线上效果）
 | 字段 | 说明 |
 |---|---|
 | `profile.name` / `nameLocal` | 英文名 / 中文名（中文名不要就设为 `''`） |
-| `profile.headline` | 一句话身份，例如学位 + 学校 |
-| `profile.subheadline` | **全站最重要的一句话**，写你解决什么问题 |
-| `profile.status` | 例如 "Open to Summer 2026 internships"，不要就设为 `''` |
+| `profile.signature` / `signatureSource` | 个性签名及其出处；出处留空则不显示 |
+| `profile.avatar` | 头像路径。图片放 `public/`，**先缩到 256×256 再放**；留空则不显示 |
+| `profile.subheadline` | **全站最重要的一句话** |
+| `profile.facts` | 首屏右侧的分类信息卡，增删卡片改这个数组 |
+| `profile.status` | 状态提示，留空则不显示 |
 | `about` | 2~3 段自我介绍 |
-| `skills` | 技能分组，3~4 组 |
+| `skills` | 技能分组。每项可只写名字，也可 `{ name: 'C++', note: 'primary' }` |
+| `interests` | 兴趣标签 |
+| `uses` | 工具清单 |
 | `projects` | 项目列表，建议 3~5 个 |
-| `experiences` | 经历时间线，按时间倒序 |
-| `contactLinks` | 底部联系方式按钮 |
+| `experiences` | 经历时间线，按时间倒序；每条可带 `links` 放相关链接 |
+| `contactLinks` | 底部联系方式按钮（首屏显示前 3 个） |
 
 ### 项目描述怎么写
 
