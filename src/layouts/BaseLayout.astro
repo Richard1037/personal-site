@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Header from '../components/Header.astro';
+import Toc from '../components/Toc.astro';
 import Footer from '../components/Footer.astro';
 import { profile, seoHeadline, siteDescription } from '../data/profile';
 
@@ -91,6 +92,7 @@ const description = siteDescription;
     <div class="bg-noise" aria-hidden="true"></div>
 
     <Header />
+    <Toc />
     <main id="main">
       <slot />
     </main>

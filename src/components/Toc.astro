@@ -1,0 +1,35 @@
+---
+import { sections } from '../data/profile';
+import Icon from './Icon.astro';
+---
+
+<!--
+  左侧目录。
+
+  两点设计考虑：
+  1. 用原生 <details>，所以"收缩/展开"是零 JavaScript 的，键盘也能用，
+     屏幕阅读器会正确播报成可展开控件。
+  2. position: fixed —— 它落在居中内容栏两侧的空白里，因此**完全不影响
+     页面布局**。真正做成"参与布局的左边栏"需要重构整个页面为两栏网格，
+     收益不大、风险不小。
+
+  宽屏才显示：窄屏下内容会占满整宽，浮动面板会压住正文；而窄屏本来就有
+  顶部粘性导航可用。
+-->
+<details class="toc">
+  <summary class="toc__toggle" title="Contents" aria-label="Table of contents">
+    <Icon name="list" />
+  </summary>
+
+  <nav class="toc__nav" aria-label="Sections">
+    <ol class="toc__list">
+      {
+        sections.map((section) => (
+          <li>
+            <a href={`#${section.id}`}>{section.label}</a>
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+</details>

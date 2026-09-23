@@ -126,6 +126,7 @@ export const profile = {
     { label: 'Studying', value: 'BSc in Artificial Intelligence', icon: 'cap' },
     { label: 'At', value: 'Renmin University of China', icon: 'building' },
     { label: 'Based in', value: 'Beijing, China', icon: 'pin' },
+    { label: 'Born', value: '29 September 2007', icon: 'cake' },
     { label: 'Interested in', value: 'Algorithms and AI', icon: 'sparkle' },
     { label: 'MBTI', value: 'ESTJ', icon: 'compass' },
   ],
@@ -378,7 +379,7 @@ export const colophon = {
      content lives in one data file, kept apart from the layout, so writing
      never means touching markup.`,
 
-    `The whole page comes in about 60 KB including the avatar. The
+    `The whole page comes in under 70 KB including the avatar. The
      background is three soft radial gradients that animate transform only —
      the compositor can move those on the GPU, unlike animating
      background-position. The handful of lines of JavaScript exist for one
@@ -395,7 +396,23 @@ export const colophon = {
 };
 
 /* ==========================================================================
-   7. 联系方式
+   7. 页面板块
+   --------------------------------------------------------------------------
+   顶部导航和左侧目录共用这一份列表——只维护一处，不会出现"导航改了
+   目录忘了改"。顺序就是页面上的顺序，id 必须和组件里的锚点一致。
+   ========================================================================== */
+
+export const sections: { id: string; label: string }[] = [
+  { id: 'about', label: 'About' },
+  { id: 'now', label: 'Now' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'colophon', label: 'Colophon' },
+  { id: 'contact', label: 'Contact' },
+];
+
+/* ==========================================================================
+   8. 联系方式
    ========================================================================== */
 
 export const contactLinks: Link[] = [

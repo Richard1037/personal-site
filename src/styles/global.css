@@ -478,6 +478,93 @@ p {
   display: block;
 }
 
+/* --------------------------------------------------------------------------
+   Table of contents
+   A fixed panel that sits in the empty margin beside the centred column, so it
+   never pushes the content around. Native <details>, so collapsing it needs no
+   JavaScript. The nav is absolutely positioned, which means opening it does not
+   change the wrapper's height — that is what stops the toggle jumping.
+   -------------------------------------------------------------------------- */
+
+.toc {
+  display: none;
+  position: fixed;
+  top: 45%;
+  left: var(--space-4);
+  z-index: 40;
+}
+
+/* Only shown once there is real margin beside the column. Below that a
+   floating panel would land on top of the text, and the sticky header already
+   offers the same links. */
+@media (min-width: 64rem) {
+  .toc {
+    display: block;
+  }
+}
+
+.toc__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: saturate(180%) blur(12px);
+  color: var(--text-soft);
+  cursor: pointer;
+  list-style: none;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+/* Remove the default disclosure triangle in every engine. */
+.toc__toggle::-webkit-details-marker {
+  display: none;
+}
+
+.toc__toggle::marker {
+  content: "";
+}
+
+.toc__toggle:hover {
+  color: var(--text);
+  border-color: var(--text-faint);
+}
+
+.toc__nav {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 0;
+  width: 9.5rem;
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background-color: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: saturate(180%) blur(12px);
+}
+
+.toc__list {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+}
+
+.toc__list a {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  color: var(--text-soft);
+  transition: color var(--transition), background-color var(--transition);
+}
+
+.toc__list a:hover {
+  color: var(--text);
+  background-color: var(--bg-soft);
+}
+
 /* ==========================================================================
    5. Skip link (accessibility)
    ========================================================================== */
@@ -1350,6 +1437,8 @@ p {
 @media print {
   .site-header,
   .skip-link,
+  .toc,
+  .bg-noise,
   .hero__actions,
   .contact__links {
     display: none;
