@@ -672,8 +672,8 @@ p {
 /* --------------------------------------------------------------------------
    Greeting mascot
    Hand-built inline SVG, so it costs no requests and scales with the layout.
-   Only `transform` animates: a slow bob on the whole body, plus the raised arm
-   rotating about its shoulder on its own, faster cycle.
+   Only `transform` animates: a slow bob-and-lean on the whole body, plus the
+   right arm swinging on its own shorter cycle.
    -------------------------------------------------------------------------- */
 
 .hero__mascot {
@@ -684,6 +684,8 @@ p {
 .mascot {
   width: 100%;
   height: auto;
+  /* Pivot near the feet, so the lean reads as a sway rather than a spin. */
+  transform-origin: 50% 92%;
   animation: mascot-bob 3.4s ease-in-out infinite;
 }
 
@@ -692,27 +694,27 @@ p {
      instead of the element's own box, so the arm pivots at the shoulder at any
      rendered size. */
   transform-box: view-box;
-  transform-origin: 104px 88px;
-  animation: mascot-wave 1.5s ease-in-out infinite;
+  transform-origin: 96px 82px;
+  animation: mascot-wave 1.6s ease-in-out infinite;
 }
 
 @keyframes mascot-bob {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translateY(0) rotate(-1.5deg);
   }
   50% {
-    transform: translateY(-0.28rem);
+    transform: translateY(-0.3rem) rotate(1.5deg);
   }
 }
 
 @keyframes mascot-wave {
   0%,
   100% {
-    transform: rotate(-7deg);
+    transform: rotate(-5deg);
   }
   50% {
-    transform: rotate(11deg);
+    transform: rotate(7deg);
   }
 }
 
