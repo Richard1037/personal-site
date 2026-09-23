@@ -694,7 +694,7 @@ p {
      instead of the element's own box, so the arm pivots at the shoulder at any
      rendered size. */
   transform-box: view-box;
-  transform-origin: 21px 74px;
+  transform-origin: 26px 74px;
   animation: mascot-wave 1.6s ease-in-out infinite;
 }
 

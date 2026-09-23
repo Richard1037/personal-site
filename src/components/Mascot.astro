@@ -4,9 +4,9 @@
  *
  * 手写的内联 SVG：零外部请求、可随主题缩放、只有两条 CSS 动画。
  *
- * 造型比例是从参考图上量出来的（宽高比 0.88，最宽处在高度 50~55%），
- * 不是目测的。三个关键特征：白色眼白 + 深色瞳孔的大眼睛、宽嘴笑、
- * 一只手举起打招呼。
+ * 造型比例是从参考图上量出来的，不是目测。三个关键特征：白色眼白 +
+ * 深色瞳孔的大眼睛、宽嘴笑、一只手举起打招呼。手臂用较粗的圆头描边画成，
+ * 圆头本身就是手掌——比另贴一个圆球自然。
  *
  * 想换掉它：删掉 Hero.astro 里的 <Mascot /> 一行即可。
  */
@@ -20,43 +20,43 @@
   xmlns="http://www.w3.org/2000/svg"
 >
   <!-- 腿 -->
-  <ellipse cx="41" cy="131" rx="13" ry="13" fill="#efdf98"></ellipse>
-  <ellipse cx="79" cy="131" rx="13" ry="13" fill="#efdf98"></ellipse>
+  <ellipse cx="44" cy="131" rx="12" ry="13" fill="#efdf98"></ellipse>
+  <ellipse cx="76" cy="131" rx="12" ry="13" fill="#efdf98"></ellipse>
 
   <!-- 右手：垂在体侧 -->
   <path
-    d="M100 86C112 96 110 112 100 118"
+    d="M100 86C108 96 106 110 101 116"
     fill="none"
     stroke="#efdf98"
-    stroke-width="12"
+    stroke-width="16"
     stroke-linecap="round"></path>
 
-  <!-- 左手：举起挥手（靠 CSS 摆动） -->
+  <!-- 左手：举起挥手（靠 CSS 绕肩膀摆动） -->
   <g class="mascot__arm">
     <path
-      d="M20 76C8 74 4 60 9 50"
+      d="M25 74C13 72 9 58 14 47"
       fill="none"
       stroke="#efdf98"
-      stroke-width="12"
+      stroke-width="16"
       stroke-linecap="round"></path>
   </g>
 
-  <!-- 身体：头身一体的圆润造型 -->
+  <!-- 身体 -->
   <path
-    d="M60 2C74 2 86 14 89 34C92 52 110 56 112 76C114 96 106 114 96 124C88 132 74 134 60 134C46 134 32 132 24 124C14 114 6 96 8 76C10 56 28 52 31 34C34 14 46 2 60 2Z"
+    d="M60 2C73 2 84 14 86 34C88 54 105 58 107 78C109 96 101 116 91 125C85 131 73 134 60 134C47 134 35 131 29 125C19 116 11 96 13 78C15 58 32 54 34 34C36 14 47 2 60 2Z"
     fill="#efdf98"></path>
 
   <!-- 眼睛：白色眼白 + 深色瞳孔 + 高光 -->
-  <ellipse cx="44" cy="31" rx="12" ry="13" fill="#fdfcf6"></ellipse>
-  <ellipse cx="78" cy="31" rx="12" ry="13" fill="#fdfcf6"></ellipse>
-  <ellipse cx="45.5" cy="31.5" rx="6" ry="6.5" fill="#3a332a"></ellipse>
-  <ellipse cx="76.5" cy="31.5" rx="6" ry="6.5" fill="#3a332a"></ellipse>
-  <circle cx="47.5" cy="28.9" r="1.7" fill="#fdfcf6"></circle>
-  <circle cx="78.5" cy="28.9" r="1.7" fill="#fdfcf6"></circle>
+  <ellipse cx="45" cy="30" rx="11" ry="12" fill="#fdfcf6"></ellipse>
+  <ellipse cx="75" cy="30" rx="11" ry="12" fill="#fdfcf6"></ellipse>
+  <ellipse cx="46.5" cy="30.5" rx="5.5" ry="6" fill="#3a332a"></ellipse>
+  <ellipse cx="73.5" cy="30.5" rx="5.5" ry="6" fill="#3a332a"></ellipse>
+  <circle cx="48" cy="28.2" r="1.6" fill="#fdfcf6"></circle>
+  <circle cx="75.5" cy="28.2" r="1.6" fill="#fdfcf6"></circle>
 
   <!-- 嘴：宽笑 -->
   <path
-    d="M46 48C52 58 70 58 76 48"
+    d="M46 46C52 56 68 56 74 46"
     fill="none"
     stroke="#4a3e2c"
     stroke-width="2.6"
