@@ -586,6 +586,11 @@ p {
    -------------------------------------------------------------------------- */
 
 .facts {
+  /* Both of these are used again below to line the value up under the label,
+     so changing the icon size here keeps everything in step. */
+  --fact-icon: 1.15rem;
+  --fact-icon-gap: var(--space-3);
+
   display: grid;
   gap: 1px;
   margin: 0;
@@ -601,6 +606,9 @@ p {
 }
 
 .facts__label {
+  display: flex;
+  align-items: center;
+  gap: var(--fact-icon-gap);
   margin-bottom: 0.15rem;
   font-size: 0.6875rem;
   font-weight: 600;
@@ -609,11 +617,22 @@ p {
   color: var(--text-faint);
 }
 
+.facts__label .icon {
+  width: var(--fact-icon);
+  height: var(--fact-icon);
+}
+
 .facts__value {
   margin: 0;
   font-size: 0.9375rem;
   line-height: 1.45;
   color: var(--text);
+}
+
+/* When a row has an icon, the value starts under the label's text rather than
+   under the icon, so the two columns stay visually aligned. */
+.facts__row--icon .facts__value {
+  padding-left: calc(var(--fact-icon) + var(--fact-icon-gap));
 }
 
 /* Pulsing dot to draw the eye to "open to internships". */

@@ -1,6 +1,7 @@
 ---
 import { profile, contactLinks } from '../data/profile';
 import ContactLink from './ContactLink.astro';
+import Icon from './Icon.astro';
 
 // 首屏显示前 3 个联系方式。想改变首屏展示哪些，调整 profile.ts 里
 // contactLinks 的顺序即可，这里不用改。
@@ -66,8 +67,12 @@ const hasFacts = profile.facts.length > 0;
         hasFacts && (
           <dl class="facts">
             {profile.facts.map((fact) => (
-              <div class="facts__row">
-                <dt class="facts__label">{fact.label}</dt>
+              /* 有图标的行加一个修饰类，让内容整体右移，与标签文字对齐 */
+              <div class:list={['facts__row', fact.icon && 'facts__row--icon']}>
+                <dt class="facts__label">
+                  <Icon name={fact.icon} />
+                  {fact.label}
+                </dt>
                 <dd class="facts__value">{fact.value}</dd>
               </div>
             ))}

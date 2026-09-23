@@ -90,6 +90,8 @@ export interface Fact {
   label: string;
   /** 内容，例如 "BSc in Artificial Intelligence" */
   value: string;
+  /** 图标名，对应 src/data/icons.ts 里的键。不填则不显示图标。 */
+  icon?: string;
 }
 
 export const profile = {
@@ -121,11 +123,11 @@ export const profile = {
    * 宽屏时排在右侧一列，窄屏时堆到内容下方。
    */
   facts: [
-    { label: 'Studying', value: 'BSc in Artificial Intelligence' },
-    { label: 'At', value: 'Renmin University of China' },
-    { label: 'Based in', value: 'Beijing, China' },
-    { label: 'Interested in', value: 'Algorithms and AI' },
-    { label: 'MBTI', value: 'ESTJ' },
+    { label: 'Studying', value: 'BSc in Artificial Intelligence', icon: 'cap' },
+    { label: 'At', value: 'Renmin University of China', icon: 'building' },
+    { label: 'Based in', value: 'Beijing, China', icon: 'pin' },
+    { label: 'Interested in', value: 'Algorithms and AI', icon: 'sparkle' },
+    { label: 'MBTI', value: 'ESTJ', icon: 'compass' },
   ],
 
   /**
