@@ -3,7 +3,10 @@
  *  这是你更新网站时【唯一需要修改】的文件。
  *
  *  改这里的内容 -> 提交到 GitHub -> 网站自动更新。不需要碰任何布局代码。
- *  所有以 TODO 开头的注释都是需要你替换成真实信息的占位说明。
+ *
+ *  标了 TODO 的地方需要你确认或补全。标了 DRAFT 的地方是我代笔的初稿，
+ *  请务必读一遍、改成你自己的话——别人写的自我描述放在你的主页上，
+ *  一旦被追问细节会很难受。
  * ============================================================================
  */
 
@@ -30,7 +33,7 @@ export interface Project {
   links: Link[];
   /** 年份，用于排序和显示 */
   year: string;
-  /** 设为 true 会加大卡片并排在前面；建议只标记 2~3 个最重要的项目 */
+  /** 设为 true 会排在前面；建议只标记 2~3 个最重要的项目 */
   featured?: boolean;
 }
 
@@ -50,7 +53,7 @@ export interface Experience {
   org: string;
   /** 时间，例如 "Jun 2025 – Sep 2025" 或 "2024 – Present" */
   period: string;
-  /** 你做了什么、产出了什么。1~3 句。没有具体产出就写你学到了什么可迁移的能力。 */
+  /** 你做了什么、产出了什么。1~3 句。 */
   description: string;
   /** 可选的关键词标签 */
   tags?: string[];
@@ -62,190 +65,168 @@ export interface SkillGroup {
 }
 
 /* ==========================================================================
-   1. 基本信息 —— TODO: 全部替换成你的真实信息
+   1. 基本信息
    ========================================================================== */
 
 export const profile = {
-  /** 英文名或拼音，显示为页面主标题 */
-  name: 'Zhang San',
-  /** 中文名（可选，显示在主标题旁边的小字；不需要就设为空字符串 ''） */
-  nameLocal: '张三',
-
-  /** 一句话身份，例如 'BSc Computer Science, Zhejiang University' */
-  headline: 'BSc Computer Science · Zhejiang University',
+  /** 显示为页面主标题 */
+  name: 'Richard Wang',
+  /** 中文名，显示在主标题旁边的小字；不需要就设为 '' */
+  nameLocal: '汪宏睿',
 
   /**
-   * 你的"一句话价值主张"。这是全站最重要的一句话。
-   * 好例子：'I build tools that make research data easier to trust.'
-   * 坏例子：'A passionate developer who loves coding and learning new things.'
+   * TODO 确认：GSAI 既有本科也有人工智能硕士/博士。英文里最好写清楚是哪一种，
+   * 招聘方很在意这个区别。改成下面二者之一：
+   *   'BSc in Artificial Intelligence · Renmin University of China'
+   *   'MSc in Artificial Intelligence · Renmin University of China'
+   */
+  headline: 'Artificial Intelligence · Renmin University of China',
+
+  /**
+   * DRAFT 你的"一句话价值主张"。我没法替你决定方向，这是我根据你的项目
+   * 和"still exploring"写的版本——读一遍，不准确就自己改。
    */
   subheadline:
-    'I build small, focused web tools that make study and research workflows less painful.',
+    'First-year AI student in Beijing, building small dependency-free web tools while I work out where in AI to go deep.',
 
-  /** 所在城市 */
-  location: 'Hangzhou, China',
+  location: 'Beijing, China',
 
-  /** 当前状态，招聘方很在意。不需要就设为 '' */
-  status: 'Open to Summer 2026 internships',
+  /**
+   * 留空则不显示。将来想开放实习机会就填，例如：
+   * 'Open to Summer 2027 internships'
+   */
+  status: '',
 
-  /** 联系邮箱 */
-  email: 'you@example.com',
+  email: 'hongrui_w@outlook.com',
 
-  /** 页脚版权署名用的年份起点（自动显示为 2025–当前年份） */
-  since: 2025,
+  /** 页脚版权年份起点 */
+  since: 2026,
 
   /** 联系板块的引导语。1~2 句，说明你希望收到什么样的联系。 */
   contactNote:
-    "I'm always happy to hear about internships, research collaborations, or just to compare notes on a project. Email is the fastest way to reach me.",
+    "I'm happy to hear about internships, research opportunities, or just to compare notes on a project. Email is the fastest way to reach me.",
 };
 
 /* ==========================================================================
-   2. 关于我 + 技能 —— TODO: 替换
+   2. 关于我 + 技能
    ========================================================================== */
 
-/** 2~3 段短文，每段 2~3 句。第一段讲你是谁、在做什么；后面讲你的兴趣方向或做事方式。 */
+/**
+ * DRAFT 下面两段是我根据你的信息代笔的。请务必逐句读一遍，把不像你说的话改掉。
+ * 好的自我介绍只需要回答三件事：你是谁、你在做什么、你为什么在意它。
+ */
 export const about: string[] = [
-  `I'm an undergraduate in computer science at Zhejiang University. Most of what I
-   build starts as a small annoyance in my own workflow — a script that got out of
-   hand, or a tool I wished existed while writing a lab report.`,
+  `I'm a first-year student at the Gaoling School of Artificial Intelligence,
+   Renmin University of China. Most of what I've built so far started as something
+   I simply wanted to exist — a place to keep half-formed ideas, a card that says
+   who I am without a framework doing the talking.`,
 
-  `Right now I'm most interested in the unglamorous end of software: data pipelines,
-   developer tooling, and the interfaces that make messy information legible. I care
-   more about whether something is still maintainable in two years than about whether
-   it uses the newest framework.`,
+  `I keep coming back to the constraint of zero dependencies: plain HTML, CSS and
+   JavaScript, no build step, one file you can open by double-clicking it. It forces
+   you to understand what you are actually shipping. Lately I'm spending more time on
+   the AI side of my degree, looking for the problem I want to stay with.`,
 ];
 
-/** 技能分组。3~4 组、每组 4~8 项最合适。不要写"精通"，写了就要能被追问。 */
+/**
+ * TODO 技能。C++ 和 Python 是你自己列的；Web 一组是依据你两个仓库实际使用的
+ * 技术补的（都是原生实现，没有框架）。不确定该不该写就先删掉那一组——
+ * 写了就要经得起追问。
+ */
 export const skills: SkillGroup[] = [
   {
     label: 'Languages',
-    items: ['Python', 'TypeScript', 'C++', 'SQL'],
+    items: ['C++', 'Python'],
   },
   {
-    label: 'Web & Frameworks',
-    items: ['React', 'Node.js', 'FastAPI', 'PostgreSQL'],
-  },
-  {
-    label: 'Tools & Practices',
-    items: ['Git', 'Docker', 'Linux', 'Pytest', 'CI/CD'],
+    label: 'Web (no frameworks)',
+    items: ['HTML', 'CSS', 'JavaScript'],
   },
 ];
 
 /* ==========================================================================
-   3. 项目作品集 —— TODO: 换成你自己的 3~5 个项目
+   3. 项目作品集
    --------------------------------------------------------------------------
-   找不到"项目"？课程作业、竞赛作品、给社团做的小工具、自己写的脚本都算。
-   宁可有 3 个写清楚的真实项目，也不要 10 个只有名字的仓库链接。
+   三个项目均取自你的 GitHub 仓库，描述由我依据各仓库 README 改写。
+   建议自己核对一遍技术细节，确保每句话你都能在面试里展开讲。
    ========================================================================== */
 
 export const projects: Project[] = [
   {
-    name: 'LabNote',
-    tagline: 'Turns scattered lab notes into a searchable, citable archive.',
-    description: `My lab kept results in a folder of inconsistently named spreadsheets, and
-      finding last semester's measurements took longer than re-running the experiment.
-      I built a small ingestion pipeline plus a full-text search interface; the hard part
-      was not search but designing a minimal required schema that people would actually
-      fill in. Twelve lab members now use it weekly.`,
-    tech: ['Python', 'FastAPI', 'PostgreSQL', 'React'],
-    links: [
-      { label: 'GitHub', url: 'https://github.com/your-username/labnote' },
-      { label: 'Live demo', url: 'https://labnote.example.com' },
-    ],
-    year: '2025',
+    name: 'Idea Card Wall',
+    tagline: 'A conveyor-belt wall for keeping and revisiting half-formed ideas.',
+    description: `Note apps bury ideas in folders, so I built something that keeps them
+      moving instead: a horizontally auto-scrolling wall you can pause by hovering,
+      drag through, and search with highlighted matches. The deliberate constraint was
+      no backend — every card lives in localStorage, so the whole tool is a single HTML
+      file you can open by double-clicking. Search, multi-tag filtering and per-card
+      gradients are all plain JavaScript, with a WebGL scanline background that degrades
+      gracefully when WebGL is unavailable.`,
+    tech: ['JavaScript', 'HTML5', 'CSS3', 'WebGL (OGL)', 'localStorage'],
+    links: [{ label: 'GitHub', url: 'https://github.com/Richard1037/Idea-Card-Wall' }],
+    year: '2026',
     featured: true,
   },
   {
-    name: 'CourseGraph',
-    tagline: 'A prerequisite graph that helps students plan a four-year course path.',
-    description: `Course prerequisites were only published as prose in the handbook, so
-      planning a semester meant manually cross-referencing dozens of pages. I scraped and
-      normalised the data into a directed graph and rendered it interactively. The
-      interesting problem was handling circular and deprecated prerequisites that the
-      official data silently contained.`,
-    tech: ['TypeScript', 'D3.js', 'Vite'],
-    links: [{ label: 'GitHub', url: 'https://github.com/your-username/coursegraph' }],
-    year: '2024',
+    name: 'Personal Card',
+    tagline: 'A single-file profile card where the visual detail is the point.',
+    description: `I wanted a calling card that felt crafted rather than generated, so I
+      built one with no framework and no build step — one HTML file plus a CDN icon set.
+      It has day/night themes that remember your choice, a perspective grid that tilts
+      with the cursor, floating blurred light blobs, and one-click email copying. Most of
+      the effort went into the unglamorous parts: keeping the animation smooth, respecting
+      prefers-reduced-motion, and labelling every control for screen readers.`,
+    tech: ['JavaScript', 'HTML5', 'CSS3', 'Iconify'],
+    links: [{ label: 'GitHub', url: 'https://github.com/Richard1037/personal-card' }],
+    year: '2026',
     featured: true,
   },
   {
-    name: 'arXiv Digest Bot',
-    tagline: 'A weekly email digest ranked by how close a paper is to your own work.',
-    description: `Reading lists were drowning me. This bot embeds abstracts, compares them
-      against a short description of my research interests, and emails the top five each
-      Monday. Roughly 200 lines of Python with no LLM API — TF-IDF was good enough and
-      costs nothing to run.`,
-    tech: ['Python', 'scikit-learn', 'GitHub Actions'],
-    links: [{ label: 'GitHub', url: 'https://github.com/your-username/arxiv-digest' }],
-    year: '2024',
+    name: 'This site',
+    tagline: 'A static homepage that costs nothing to run and can change hosts in minutes.',
+    description: `I wanted a homepage that would still work in five years, so I deliberately
+      avoided everything that rots: no client-side JavaScript, no CSS framework, no external
+      fonts. Content lives in one data file, fully separate from layout. Astro renders it to
+      plain HTML at build time and Cloudflare Workers serves it, with every push to main
+      deploying automatically. The entire built site is under 20 KB.`,
+    tech: ['Astro', 'TypeScript', 'CSS', 'Cloudflare Workers'],
+    links: [{ label: 'GitHub', url: 'https://github.com/Richard1037/personal-site' }],
+    year: '2026',
   },
 ];
 
 /* ==========================================================================
-   4. 经历时间线 —— TODO: 替换。没有的就删掉，宁缺毋滥。
+   4. 经历时间线
    --------------------------------------------------------------------------
-   建议顺序：实习 > 科研 > 竞赛获奖 > 奖学金 > 教育背景。按时间倒序排列。
+   你说经历暂无，所以这里只放了教育背景（这是事实，不是编的）。
+   之后有实习 / 科研 / 竞赛，往数组最前面添加即可，格式照抄下面这条。
    ========================================================================== */
 
 export const experiences: Experience[] = [
   {
-    kind: 'work',
-    title: 'Software Engineering Intern',
-    org: 'Some Technology Co., Ltd.',
-    period: 'Jul 2025 – Sep 2025',
-    description: `Worked on an internal data-quality dashboard used by the operations team.
-      I replaced a manual CSV reconciliation step with a scheduled validator, which cut the
-      weekly reporting cycle from about four hours to under twenty minutes.`,
-    tags: ['Python', 'Airflow', 'Internal tools'],
-  },
-  {
-    kind: 'research',
-    title: 'Undergraduate Research Assistant',
-    org: 'Human-Computer Interaction Lab',
-    period: 'Mar 2025 – Present',
-    description: `Assist with the data collection and analysis pipeline for a study on how
-      students navigate academic search interfaces. I maintain the logging infrastructure
-      and wrote the preprocessing scripts used in the first paper submission.`,
-    tags: ['Research', 'Data pipelines'],
-  },
-  {
-    kind: 'competition',
-    title: 'Second Prize, National Collegiate Programming Contest',
-    org: 'Regional Round',
-    period: 'Nov 2024',
-    description: `Solved 7 of 11 problems as part of a three-person team; responsible for the
-      graph and dynamic-programming problems.`,
-    tags: ['Algorithms', 'C++'],
-  },
-  {
-    kind: 'award',
-    title: 'First-Class Academic Scholarship',
-    org: 'Zhejiang University',
-    period: '2024',
-    description: `Awarded to the top 5% of the cohort by GPA.`,
-  },
-  {
     kind: 'education',
-    title: 'BSc in Computer Science',
-    org: 'Zhejiang University',
-    period: '2023 – 2027 (expected)',
-    description: `GPA 3.8/4.0. Relevant coursework: Data Structures, Databases, Operating
-      Systems, Machine Learning, Software Engineering.`,
+    /**
+     * TODO 确认学位类型和入学年份：
+     *   本科 -> 'BSc in Artificial Intelligence'，起止 '2026 – 2030 (expected)'
+     *   硕士 -> 'MSc in Artificial Intelligence'，起止 '2026 – 2029 (expected)'
+     */
+    title: 'Artificial Intelligence',
+    org: 'Gaoling School of Artificial Intelligence, Renmin University of China',
+    period: '2026 – Present',
+    description: `Coursework in mathematics, programming and the foundations of machine
+      learning, alongside self-directed work on web tools.`,
+    tags: ['Beijing'],
   },
 ];
 
 /* ==========================================================================
-   5. 页面底部的联系方式按钮 —— TODO: 替换链接
+   5. 联系方式
    ========================================================================== */
 
 export const contactLinks: Link[] = [
-  { label: 'Email', url: 'mailto:you@example.com' },
-  { label: 'GitHub', url: 'https://github.com/your-username' },
-  // 按需添加，不需要就删掉这一行：
-  // { label: 'LinkedIn', url: 'https://www.linkedin.com/in/your-username' },
-  // { label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=XXXX' },
+  { label: 'Email', url: 'mailto:hongrui_w@outlook.com' },
+  { label: 'GitHub', url: 'https://github.com/Richard1037' },
 ];
 
-/** 搜索引擎和社交平台分享时显示的描述。1~2 句。 */
+/** 搜索引擎和社交平台分享时显示的描述。 */
 export const siteDescription =
-  'Personal site of Zhang San — computer science undergraduate building tools for research and study workflows.';
+  'Personal site of Richard Wang — first-year AI student at Renmin University of China, building dependency-free web tools.';
