@@ -1,5 +1,11 @@
 ---
-import { about, skills, interests, uses } from '../data/profile';
+import { about, skills, interests, uses, type Skill } from '../data/profile';
+import Icon from './Icon.astro';
+
+// 技能项允许两种写法：只写名字的字符串，或带 note 的对象
+function normalize(item: string | Skill): Skill {
+  return typeof item === 'string' ? { name: item } : item;
+}
 ---
 
 <section class="section container" id="about" aria-labelledby="about-heading">
@@ -14,20 +20,42 @@ import { about, skills, interests, uses } from '../data/profile';
     skills.length > 0 && (
       <div class="skills">
         {skills.map((group) => (
-          <div>
-            <h3 class="skills__label">{group.label}</h3>
-            <ul class="skills__list">
-              {group.items.map((item) => {
-                // 允许两种写法：字符串，或者带 note 的对象
-                const skill = typeof item === 'string' ? { name: item } : item;
-                return (
-                  <li class="tag">
-                    {skill.name}
-                    {skill.note && <span class="tag__note">{skill.note}</span>}
-                  </li>
-                );
-              })}
-            </ul>
+          <div class="skills__group">
+            {group.collapsible ? (
+              /* 原生 <details>：零 JavaScript，键盘可用，屏幕阅读器能正确播报 */
+              <details class="skills__disclosure">
+                <summary class="skills__label">
+                  {group.label}
+                  <span class="skills__count">{group.items.length}</span>
+                </summary>
+                <ul class="skills__list">
+                  {group.items.map((item) => {
+                    const skill = normalize(item);
+                    return (
+                      <li class="tag">
+                        {skill.name}
+                        {skill.note && <span class="tag__note">{skill.note}</span>}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </details>
+            ) : (
+              <>
+                <h3 class="skills__label">{group.label}</h3>
+                <ul class="skills__list">
+                  {group.items.map((item) => {
+                    const skill = normalize(item);
+                    return (
+                      <li class="tag">
+                        {skill.name}
+                        {skill.note && <span class="tag__note">{skill.note}</span>}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </>
+            )}
           </div>
         ))}
       </div>
@@ -41,6 +69,7 @@ import { about, skills, interests, uses } from '../data/profile';
         <ul class="interests__list">
           {interests.map((item) => (
             <li class="tag tag--accent">
+              <Icon name={item.icon} />
               {item.name}
               {item.note && <span class="tag__note">{item.note}</span>}
             </li>
@@ -58,7 +87,10 @@ import { about, skills, interests, uses } from '../data/profile';
           {uses.map((item) => (
             <>
               <dt class="uses__label">{item.label}</dt>
-              <dd class="uses__value">{item.value}</dd>
+              <dd class="uses__value">
+                <Icon name={item.icon} />
+                {item.value}
+              </dd>
             </>
           ))}
         </dl>

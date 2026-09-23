@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ============================================================================
  *  这是你更新网站时【唯一需要修改】的文件。
  *
@@ -16,6 +16,8 @@ export interface Link {
   url: string;
   /** 鼠标悬停 / 键盘聚焦时显示的具体内容：邮箱地址、GitHub 主页、微信号等。 */
   hint?: string;
+  /** 图标名，对应 src/data/icons.ts 里的键。不填则不显示图标。 */
+  icon?: string;
 }
 
 /** 一个项目。 */
@@ -74,6 +76,8 @@ export interface SkillGroup {
   label: string;
   /** 字符串写法等价于 { name: '...' }，只写名字时用它更省事。 */
   items: (string | Skill)[];
+  /** 设为 true 则默认折叠，点标签展开。适合条目很多的组。 */
+  collapsible?: boolean;
 }
 
 /* ==========================================================================
@@ -175,6 +179,8 @@ export const skills: SkillGroup[] = [
   },
   {
     label: 'Algorithms',
+    // 七个领域默认折叠，点标签展开——否则技能区会被它撑得太长
+    collapsible: true,
     items: [
       'Data structures',
       'Graph theory',
@@ -197,6 +203,8 @@ export interface Interest {
   name: string;
   /** 补充说明，会以更淡的颜色显示在同一个标签里；不需要就省略 */
   note?: string;
+  /** 图标名，对应 src/data/icons.ts 里的键。不填则不显示图标。 */
+  icon?: string;
 }
 
 /**
@@ -206,14 +214,16 @@ export interface Interest {
  * 写具体比写宽泛更有价值：具体的东西别人才接得上话。
  */
 export const interests: Interest[] = [
-  { name: 'Gym', note: 'still a beginner' },
-  { name: 'Football', note: 'Real Madrid' },
+  { name: 'Gym', note: 'still a beginner', icon: 'gym' },
+  { name: 'Football', note: 'Real Madrid', icon: 'football' },
 ];
 
 /** 「我在用什么」的一行。 */
 export interface UseItem {
   label: string;
   value: string;
+  /** 图标名，对应 src/data/icons.ts 里的键。不填则不显示图标。 */
+  icon?: string;
 }
 
 /**
@@ -221,8 +231,12 @@ export interface UseItem {
  * 也特别容易成为别人搭话的由头。不用的东西就别列。
  */
 export const uses: UseItem[] = [
-  { label: 'Editor', value: 'VS Code' },
-  { label: 'Note-taking', value: 'OneNote, handwritten on a Gaoman tablet' },
+  { label: 'Editor', value: 'VS Code', icon: 'vscode' },
+  {
+    label: 'Note-taking',
+    value: 'OneNote, handwritten on a Gaoman tablet',
+    icon: 'onenote',
+  },
 ];
 
 /* ==========================================================================
@@ -351,12 +365,27 @@ export const experiences: Experience[] = [
    ========================================================================== */
 
 export const contactLinks: Link[] = [
-  { label: 'Email', url: 'mailto:hongrui_w@outlook.com', hint: 'hongrui_w@outlook.com' },
+  {
+    label: 'Email',
+    url: 'mailto:hongrui_w@outlook.com',
+    hint: 'hongrui_w@outlook.com',
+    icon: 'outlook',
+  },
   // 微信号，没有可跳转的地址，鼠标悬停显示 ID
-  { label: 'WeChat', url: '', hint: 'Richard_1037' },
-  { label: 'GitHub', url: 'https://github.com/Richard1037', hint: 'github.com/Richard1037' },
+  { label: 'WeChat', url: '', hint: 'Richard_1037', icon: 'wechat' },
+  {
+    label: 'GitHub',
+    url: 'https://github.com/Richard1037',
+    hint: 'github.com/Richard1037',
+    icon: 'github',
+  },
   // 首屏只显示前 3 个，所以 Blog 出现在底部的 Contact 区
-  { label: 'Blog', url: 'https://www.cnblogs.com/Richardwhr', hint: 'cnblogs.com/Richardwhr' },
+  {
+    label: 'Blog',
+    url: 'https://www.cnblogs.com/Richardwhr',
+    hint: 'cnblogs.com/Richardwhr',
+    icon: 'blog',
+  },
 ];
 
 /** 用于 <title> 和分享卡片的副标题（不显示在页面上）。 */

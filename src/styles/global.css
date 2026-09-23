@@ -770,12 +770,75 @@ p {
   gap: var(--space-2);
 }
 
+/* --------------------------------------------------------------------------
+   Collapsible skill group
+   Native <details>/<summary>: no JavaScript, reachable by keyboard, and
+   announced as a disclosure. Used for long lists that would otherwise stretch
+   the section out of proportion.
+   -------------------------------------------------------------------------- */
+
+.skills__disclosure > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: 0;
+  list-style: none;
+  cursor: pointer;
+}
+
+/* Remove the default triangle in every engine. */
+.skills__disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.skills__disclosure > summary::marker {
+  content: "";
+}
+
+.skills__disclosure > summary:hover {
+  color: var(--text);
+}
+
+/* Chevron drawn from two borders, so it needs no icon asset. */
+.skills__disclosure > summary::after {
+  content: "";
+  width: 0.34rem;
+  height: 0.34rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--transition);
+}
+
+.skills__disclosure[open] > summary::after {
+  transform: rotate(-135deg);
+}
+
+/* Item count badge. */
+.skills__count {
+  padding: 0.05rem 0.4rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-soft);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--text-faint);
+}
+
+/* Only take up space once the list is actually showing. */
+.skills__disclosure[open] > summary {
+  margin-bottom: var(--space-3);
+}
+
 /* ==========================================================================
    Tags & chips (skills, tech stack, experience keywords)
    ========================================================================== */
 
 .tag {
-  display: inline-block;
+  /* inline-flex so an optional icon and the label line up without hacks */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
   padding: 0.2rem var(--space-3);
   border-radius: var(--radius-pill);
   background-color: var(--bg-soft);
@@ -785,6 +848,21 @@ p {
   white-space: nowrap;
 }
 
+/* --------------------------------------------------------------------------
+   Inline icons
+   Sized in em so they always match the text beside them, and painted with
+   currentColor so they follow the theme with no extra rules. The SVG markup
+   lives in src/components/Icon.astro, the paths in src/data/icons.ts.
+   -------------------------------------------------------------------------- */
+
+.icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  /* Nudge the glyph onto the text baseline when used in normal flow. */
+  vertical-align: -0.125em;
+}
+
 .tag--accent {
   background-color: var(--accent-soft);
   border-color: transparent;
@@ -792,9 +870,9 @@ p {
   font-weight: 550;
 }
 
-/* Secondary text inside a chip, e.g. the "Real Madrid" in "Football". */
+/* Secondary text inside a chip, e.g. the "Real Madrid" in "Football".
+   Spacing comes from the chip's own flex gap. */
 .tag__note {
-  margin-left: 0.4em;
   font-weight: 400;
   color: var(--text-faint);
 }
@@ -840,6 +918,9 @@ p {
 }
 
 .uses__value {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   margin: 0;
   font-size: 0.9375rem;
   color: var(--text);

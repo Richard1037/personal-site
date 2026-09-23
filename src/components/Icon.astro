@@ -1,0 +1,42 @@
+---
+import { icons } from '../data/icons';
+
+/**
+ * 内联 SVG 图标。
+ *
+ * 图标路径集中在 src/data/icons.ts，这里只负责渲染。
+ * 传一个不存在的名字不会报错，只是什么都不画——这样删图标不会让构建崩掉。
+ */
+interface Props {
+  /** icons.ts 里的键名 */
+  name?: string;
+  /** 尺寸，默认 1em，即跟随周围文字大小 */
+  size?: string;
+}
+
+const { name, size = '1em' } = Astro.props;
+const icon = name ? icons[name] : undefined;
+const isStroke = icon?.mode === 'stroke';
+---
+
+{
+  icon && (
+    <svg
+      class="icon"
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      aria-hidden="true"
+      focusable="false"
+      fill={isStroke ? 'none' : 'currentColor'}
+      stroke={isStroke ? 'currentColor' : undefined}
+      stroke-width={isStroke ? 1.6 : undefined}
+      stroke-linecap={isStroke ? 'round' : undefined}
+      stroke-linejoin={isStroke ? 'round' : undefined}
+    >
+      {icon.paths.map((d) => (
+        <path d={d} />
+      ))}
+    </svg>
+  )
+}

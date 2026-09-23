@@ -1,5 +1,6 @@
 ---
 import type { Link } from '../data/profile';
+import Icon from './Icon.astro';
 
 /**
  * 一个联系方式按钮。
@@ -7,6 +8,7 @@ import type { Link } from '../data/profile';
  * - 有 url：渲染为 <a>，可点击跳转
  * - 没有 url（例如微信号）：渲染为 <span>，不可点击，但可键盘聚焦以显示提示
  * - 带 hint：鼠标悬停或键盘聚焦时在按钮上方显示具体内容
+ * - 带 icon：在文字前显示图标
  */
 interface Props {
   link: Link;
@@ -28,6 +30,7 @@ const classes = ['button', variant === 'primary' && 'button--primary', !link.url
       rel={isExternal ? 'me noopener' : undefined}
       target={isExternal ? '_blank' : undefined}
     >
+      <Icon name={link.icon} />
       {link.label}
       {link.hint && (
         <span class="tooltip" aria-hidden="true">
@@ -41,6 +44,7 @@ const classes = ['button', variant === 'primary' && 'button--primary', !link.url
       tabindex="0"
       aria-label={link.hint ? `${link.label}: ${link.hint}` : link.label}
     >
+      <Icon name={link.icon} />
       {link.label}
       {link.hint && (
         <span class="tooltip" aria-hidden="true">
