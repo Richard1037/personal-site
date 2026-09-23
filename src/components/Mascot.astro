@@ -4,9 +4,9 @@
  *
  * 手写的内联 SVG：零外部请求、可随主题缩放、只有两条 CSS 动画。
  *
- * 一个设计取舍值得说明：参考图里手臂是靠 3D 阴影区分的，轮廓上几乎不凸。
- * 如果把它画成凸出轮廓的手臂，侧面就会出现肿块、整体不像。所以这里用
- * **略深一档的色块**在轮廓内部表现手臂——这是平面插画还原立体角色的常规做法。
+ * 造型比例是从参考图上量出来的（宽高比 0.88，最宽处在高度 50~55%），
+ * 不是目测的。三个关键特征：白色眼白 + 深色瞳孔的大眼睛、宽嘴笑、
+ * 一只手举起打招呼。
  *
  * 想换掉它：删掉 Hero.astro 里的 <Mascot /> 一行即可。
  */
@@ -14,49 +14,51 @@
 
 <svg
   class="mascot"
-  viewBox="0 0 120 175"
+  viewBox="0 0 120 148"
   aria-hidden="true"
   focusable="false"
   xmlns="http://www.w3.org/2000/svg"
 >
   <!-- 腿 -->
-  <ellipse cx="42" cy="150" rx="12" ry="14" fill="#f0e2a0"></ellipse>
-  <ellipse cx="78" cy="150" rx="12" ry="14" fill="#f0e2a0"></ellipse>
+  <ellipse cx="41" cy="131" rx="13" ry="13" fill="#efdf98"></ellipse>
+  <ellipse cx="79" cy="131" rx="13" ry="13" fill="#efdf98"></ellipse>
 
-  <!-- 身体：光滑的蛋形，头身一体 -->
+  <!-- 右手：垂在体侧 -->
   <path
-    d="M60 4C74 4 83 15 85 32C87 55 106 72 109 96C111 118 100 140 86 148C78 153 70 156 60 156C50 156 42 153 34 148C20 140 9 118 11 96C14 72 33 55 35 32C37 15 46 4 60 4Z"
-    fill="#f0e2a0"></path>
-
-  <!-- 左臂 -->
-  <path
-    d="M24 80C17 96 19 110 27 117"
+    d="M100 86C112 96 110 112 100 118"
     fill="none"
-    stroke="#e4d48f"
-    stroke-width="13"
+    stroke="#efdf98"
+    stroke-width="12"
     stroke-linecap="round"></path>
 
-  <!-- 右臂：颜色还是略深，靠 CSS 轻微摆动 -->
+  <!-- 左手：举起挥手（靠 CSS 摆动） -->
   <g class="mascot__arm">
     <path
-      d="M96 80C103 96 101 110 93 117"
+      d="M20 76C8 74 4 60 9 50"
       fill="none"
-      stroke="#e4d48f"
-      stroke-width="13"
+      stroke="#efdf98"
+      stroke-width="12"
       stroke-linecap="round"></path>
   </g>
 
-  <!-- 眼睛：深色小椭圆 + 高光 -->
-  <ellipse cx="43" cy="41" rx="7.5" ry="9" fill="#3a3a32"></ellipse>
-  <ellipse cx="77" cy="41" rx="7.5" ry="9" fill="#3a3a32"></ellipse>
-  <circle cx="45" cy="37.6" r="1.9" fill="#ffffff"></circle>
-  <circle cx="79" cy="37.6" r="1.9" fill="#ffffff"></circle>
-
-  <!-- 嘴：很小 -->
+  <!-- 身体：头身一体的圆润造型 -->
   <path
-    d="M55 58C57 62 63 62 65 58"
+    d="M60 2C74 2 86 14 89 34C92 52 110 56 112 76C114 96 106 114 96 124C88 132 74 134 60 134C46 134 32 132 24 124C14 114 6 96 8 76C10 56 28 52 31 34C34 14 46 2 60 2Z"
+    fill="#efdf98"></path>
+
+  <!-- 眼睛：白色眼白 + 深色瞳孔 + 高光 -->
+  <ellipse cx="44" cy="31" rx="12" ry="13" fill="#fdfcf6"></ellipse>
+  <ellipse cx="78" cy="31" rx="12" ry="13" fill="#fdfcf6"></ellipse>
+  <ellipse cx="45.5" cy="31.5" rx="6" ry="6.5" fill="#3a332a"></ellipse>
+  <ellipse cx="76.5" cy="31.5" rx="6" ry="6.5" fill="#3a332a"></ellipse>
+  <circle cx="47.5" cy="28.9" r="1.7" fill="#fdfcf6"></circle>
+  <circle cx="78.5" cy="28.9" r="1.7" fill="#fdfcf6"></circle>
+
+  <!-- 嘴：宽笑 -->
+  <path
+    d="M46 48C52 58 70 58 76 48"
     fill="none"
-    stroke="#6e6033"
-    stroke-width="2"
+    stroke="#4a3e2c"
+    stroke-width="2.6"
     stroke-linecap="round"></path>
 </svg>
