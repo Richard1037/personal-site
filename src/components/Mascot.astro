@@ -1,0 +1,61 @@
+---
+/**
+ * 挥手打招呼的奶龙。
+ *
+ * 手写的内联 SVG：零外部请求、可随主题缩放、只有一条 CSS 动画。
+ * 挥手的动作由 CSS 旋转手臂那个 <g> 完成——不需要 JavaScript。
+ *
+ * 想换掉它：删掉 Hero.astro 里的 <Mascot /> 一行即可。
+ */
+---
+
+<svg
+  class="mascot"
+  viewBox="0 0 120 168"
+  aria-hidden="true"
+  focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- 身体：头身一体的蛋形，没有脖子 -->
+  <path
+    d="M60 8C78 8 90 22 92 44C95 66 106 84 110 106C114 128 96 150 60 150C24 150 6 128 10 106C14 84 25 66 28 44C30 22 42 8 60 8Z"
+    fill="#f0e2a0"></path>
+
+  <!-- 腿：两根短粗的柱子 -->
+  <ellipse cx="42" cy="150" rx="12" ry="12" fill="#f0e2a0"></ellipse>
+  <ellipse cx="78" cy="150" rx="12" ry="12" fill="#f0e2a0"></ellipse>
+
+  <!-- 左臂：垂着 -->
+  <path
+    d="M16 96C11 106 14 118 22 124"
+    fill="none"
+    stroke="#f0e2a0"
+    stroke-width="12"
+    stroke-linecap="round"></path>
+
+  <!-- 右臂：抬起来挥手（CSS 让它绕肩膀转动） -->
+  <g class="mascot__arm">
+    <path
+      d="M104 88C111 82 113 68 109 54"
+      fill="none"
+      stroke="#f0e2a0"
+      stroke-width="12"
+      stroke-linecap="round"></path>
+  </g>
+
+  <!-- 眼睛：深色小椭圆 + 一圈略深的眼窝 + 高光 -->
+  <ellipse cx="45" cy="53" rx="8.5" ry="10" fill="#e0ce86"></ellipse>
+  <ellipse cx="75" cy="53" rx="8.5" ry="10" fill="#e0ce86"></ellipse>
+  <ellipse cx="45" cy="53" rx="7" ry="8" fill="#3a3a32"></ellipse>
+  <ellipse cx="75" cy="53" rx="7" ry="8" fill="#3a3a32"></ellipse>
+  <circle cx="47.5" cy="50.5" r="2" fill="#ffffff"></circle>
+  <circle cx="77.5" cy="50.5" r="2" fill="#ffffff"></circle>
+
+  <!-- 嘴 -->
+  <path
+    d="M54 78C56 82 64 82 66 78"
+    fill="none"
+    stroke="#6e6033"
+    stroke-width="2.4"
+    stroke-linecap="round"></path>
+</svg>

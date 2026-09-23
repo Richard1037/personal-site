@@ -2,6 +2,7 @@
 import { profile, contactLinks } from '../data/profile';
 import ContactLink from './ContactLink.astro';
 import Icon from './Icon.astro';
+import Mascot from './Mascot.astro';
 
 // 首屏显示前 3 个联系方式。想改变首屏展示哪些，调整 profile.ts 里
 // contactLinks 的顺序即可，这里不用改。
@@ -12,8 +13,8 @@ const hasFacts = profile.facts.length > 0;
 <section class="hero container" id="top">
   <!--
     两个包装层在宽屏下是左右两栏；窄屏下它们会被 CSS 的 display:contents
-    溶解掉，好让内部的四块（文字 / 头像 / 按钮 / 信息卡）重新排序，
-    把头提到按钮之前——否则头像会掉到很下面，而起不到"认出你"的作用。
+    溶解掉，好让内部的几块重新排序，把头提到按钮之前——否则头像会掉到
+    很下面，而起不到"认出你"的作用。
   -->
   <div class="hero__grid">
     <div class="hero__intro">
@@ -55,6 +56,11 @@ const hasFacts = profile.facts.length > 0;
           </div>
         )
       }
+
+      <!-- 打招呼的奶龙。不想要就删掉这一行。 -->
+      <div class="hero__mascot">
+        <Mascot />
+      </div>
     </div>
 
     <!--
