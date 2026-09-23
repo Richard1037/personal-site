@@ -10,35 +10,41 @@ const hasFacts = profile.facts.length > 0;
 ---
 
 <section class="hero container" id="top">
+  <!--
+    两个包装层在宽屏下是左右两栏；窄屏下它们会被 CSS 的 display:contents
+    溶解掉，好让内部的四块（文字 / 头像 / 按钮 / 信息卡）重新排序，
+    把头提到按钮之前——否则头像会掉到很下面，而起不到"认出你"的作用。
+  -->
   <div class="hero__grid">
-    <!-- 左栏：姓名、签名、一句话介绍、联系方式 -->
     <div class="hero__intro">
-      <h1 class="hero__name">
-        {profile.name}
-        {profile.nameLocal && <span class="hero__name-local">{profile.nameLocal}</span>}
-      </h1>
+      <div class="hero__text">
+        <h1 class="hero__name">
+          {profile.name}
+          {profile.nameLocal && <span class="hero__name-local">{profile.nameLocal}</span>}
+        </h1>
 
-      {
-        profile.signature && (
-          <p class="hero__signature">
-            {profile.signature}
-            {profile.signatureSource && (
-              <cite class="hero__signature-source">{profile.signatureSource}</cite>
-            )}
-          </p>
-        )
-      }
+        {
+          profile.signature && (
+            <p class="hero__signature">
+              {profile.signature}
+              {profile.signatureSource && (
+                <cite class="hero__signature-source">{profile.signatureSource}</cite>
+              )}
+            </p>
+          )
+        }
 
-      <p class="hero__subheadline">{profile.subheadline}</p>
+        <p class="hero__subheadline">{profile.subheadline}</p>
 
-      {
-        profile.status && (
-          <p class="hero__status">
-            <span class="status-dot" aria-hidden="true" />
-            {profile.status}
-          </p>
-        )
-      }
+        {
+          profile.status && (
+            <p class="hero__status">
+              <span class="status-dot" aria-hidden="true" />
+              {profile.status}
+            </p>
+          )
+        }
+      </div>
 
       {
         heroLinks.length > 0 && (

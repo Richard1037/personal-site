@@ -11,13 +11,13 @@ const hasLinks = now.links.length > 0;
     <span class="now__updated">{now.updated}</span>
   </h2>
 
-  <div class="now__body">
+  <div class="section__body">
     {now.body.map((paragraph) => <p>{paragraph}</p>)}
   </div>
 
   {
     hasLinks && (
-      <div class="now__links">
+      <div class="section__links">
         {now.links.map((link) => (
           <a class="link-arrow" href={link.url} target="_blank" rel="noopener">
             {link.label}

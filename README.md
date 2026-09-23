@@ -17,22 +17,29 @@ personal-site/
 ├── package.json
 ├── .gitattributes            # 统一换行符
 ├── public/
-│   ├── favicon.svg           # 站点图标
+│   ├── avatar.jpg            # 头像（已缩到 256×256）
+│   ├── favicon.svg           # 标签页图标
+│   ├── og.png                # 分享卡片图（1200×630，只被社交平台抓取）
 │   └── robots.txt
 └── src/
     ├── data/
-    │   └── profile.ts        # ★ 你的所有内容都在这里
+    │   ├── profile.ts        # ★ 你的所有内容都在这里
+    │   └── icons.ts          # 内联 SVG 图标的路径数据
     ├── styles/
     │   └── global.css        # 全部样式（设计变量在文件顶部的 :root）
     ├── layouts/
-    │   └── BaseLayout.astro  # HTML 骨架、SEO、社交分享元数据
+    │   └── BaseLayout.astro  # HTML 骨架、SEO、社交分享元数据、主题脚本
     ├── components/
-    │   ├── Header.astro      # 顶部导航
-    │   ├── Hero.astro        # 首屏：姓名、一句话介绍、按钮
-    │   ├── About.astro       # 关于我 + 技能
+    │   ├── Header.astro      # 顶部导航 + 深浅色切换
+    │   ├── Hero.astro        # 首屏：姓名、签名、头像、信息卡、联系方式
+    │   ├── About.astro       # 关于我 + 技能 + 兴趣 + 工具清单
+    │   ├── Now.astro         # 最近在做什么
     │   ├── Projects.astro    # 项目作品集
-    │   ├── Experience.astro  # 经历时间线
+    │   ├── Experience.astro  # 经历时间线（按类型配图标）
+    │   ├── Colophon.astro    # 本站是怎么做出来的
     │   ├── Contact.astro     # 联系方式
+    │   ├── ContactLink.astro # 联系方式按钮（含悬停提示）
+    │   ├── Icon.astro        # 内联 SVG 图标渲染
     │   └── Footer.astro
     └── pages/
         └── index.astro       # 唯一的页面，把上面各板块拼起来

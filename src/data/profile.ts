@@ -364,7 +364,38 @@ export const experiences: Experience[] = [
 ];
 
 /* ==========================================================================
-   6. 联系方式
+   6. Colophon（本站是怎么做出来的）
+   --------------------------------------------------------------------------
+   放在经历之后、联系方式之前。对同专业的人来说这可能是全站最有话题性的
+   一块——技术选择本身就是个能聊起来的话题。
+   注意：正文里提到了站点体积，如果哪天明显变大，记得同步改那句话。
+   ========================================================================== */
+
+export const colophon = {
+  body: [
+    `Everything here is pre-rendered at build time by Astro: no client-side
+     framework, no CSS framework, no external fonts, no analytics. All of the
+     content lives in one data file, kept apart from the layout, so writing
+     never means touching markup.`,
+
+    `The whole page comes in well under 60 KB including the avatar. The
+     background is three soft radial gradients that animate transform only —
+     the compositor can move those on the GPU, unlike animating
+     background-position. The handful of lines of JavaScript exist for one
+     reason: remembering a theme choice.`,
+  ],
+
+  /** 相关链接。不需要就设为空数组 []。 */
+  links: [
+    {
+      label: 'Source on GitHub',
+      url: 'https://github.com/Richard1037/personal-site',
+    },
+  ],
+};
+
+/* ==========================================================================
+   7. 联系方式
    ========================================================================== */
 
 export const contactLinks: Link[] = [

@@ -15,6 +15,7 @@ const { title = `${profile.name} · ${seoHeadline}` } = Astro.props;
 // remember to change it there once you own a domain.
 const site = Astro.site ?? new URL('https://your-domain.com');
 const canonical = new URL(Astro.url.pathname, site).href;
+const ogImage = new URL('/og.png', site).href;
 const description = siteDescription;
 ---
 
@@ -29,14 +30,21 @@ const description = siteDescription;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Link previews on Twitter/X, LinkedIn, WeChat, Slack, etc. -->
+    <!-- Link previews on Twitter/X, LinkedIn, WeChat, Slack, etc.
+         The image is what turns a bare blue link in a chat app into a card,
+         which matters a lot for a page whose job is being passed around. -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={description} />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <!-- Tints the browser UI (mobile address bar) to match the theme. The
          inline script below keeps this in step with the toggle. -->
@@ -74,6 +82,14 @@ const description = siteDescription;
 
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
+
+    <!--
+      Grain overlay. Large soft gradients band on 8-bit displays; a little noise
+      breaks the banding up. Purely decorative, so it is hidden from assistive
+      technology.
+    -->
+    <div class="bg-noise" aria-hidden="true"></div>
+
     <Header />
     <main id="main">
       <slot />

@@ -1,0 +1,26 @@
+---
+import { colophon } from '../data/profile';
+
+const hasLinks = colophon.links.length > 0;
+---
+
+<section class="section container" id="colophon" aria-labelledby="colophon-heading">
+  <span class="eyebrow">Colophon</span>
+  <h2 class="section__title" id="colophon-heading">How this site is built</h2>
+
+  <div class="section__body">
+    {colophon.body.map((paragraph) => <p>{paragraph}</p>)}
+  </div>
+
+  {
+    hasLinks && (
+      <div class="section__links">
+        {colophon.links.map((link) => (
+          <a class="link-arrow" href={link.url} target="_blank" rel="noopener">
+            {link.label}
+          </a>
+        ))}
+      </div>
+    )
+  }
+</section>

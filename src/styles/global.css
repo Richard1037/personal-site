@@ -84,6 +84,9 @@
     sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
     "Liberation Mono", monospace;
+  /* Serif stack for quotations. System fonts only, so nothing is downloaded. */
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", "Songti SC",
+    SimSun, serif;
 
   /* Spacing scale (8px base) */
   --space-1: 0.25rem;
@@ -250,6 +253,21 @@ main,
   to {
     transform: translate3d(-5%, -4%, 0) scale(1.12);
   }
+}
+
+/* --------------------------------------------------------------------------
+   Grain overlay
+   Large soft gradients band on 8-bit displays. A little noise breaks the
+   banding up. It is an inline SVG filter, so this is still zero requests.
+   -------------------------------------------------------------------------- */
+
+.bg-noise {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 img,
@@ -504,7 +522,8 @@ p {
   margin-bottom: var(--space-4);
   padding-left: var(--space-4);
   border-left: 2px solid var(--accent);
-  font-size: 1.0625rem;
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
   font-style: italic;
   color: var(--text-soft);
 }
@@ -532,11 +551,11 @@ p {
   letter-spacing: 0;
 }
 
-/* Two columns on wide screens: the intro reads on the left and the categorised
-   fact cards sit alongside it. Everything stacks on narrow screens. */
+/* One column on narrow screens, two on wide ones. Ordering of the stacked
+   case is handled further down, next to .hero__aside. */
 .hero__grid {
   display: grid;
-  gap: var(--space-7);
+  gap: var(--space-6);
 }
 
 @media (min-width: 52rem) {
@@ -568,6 +587,44 @@ p {
   display: grid;
   gap: var(--space-5);
   justify-items: start;
+}
+
+/* Stacked layout. The two wrapper blocks dissolve so their children can be
+   interleaved and reordered: text, then avatar, then buttons, then the cards.
+   Without this the avatar would land below the buttons — far too late to help
+   anyone recognise whose page this is. `display: contents` is applied through
+   a two-class selector so it reliably beats the rule above regardless of
+   source order. */
+@media (max-width: 51.99rem) {
+  .hero__grid .hero__intro,
+  .hero__grid .hero__aside {
+    display: contents;
+  }
+
+  .hero__text {
+    order: 1;
+  }
+
+  .hero__avatar {
+    order: 2;
+  }
+
+  .hero__actions {
+    order: 3;
+  }
+
+  .facts {
+    order: 4;
+  }
+
+  /* The grid gap spaces these now, so drop the standalone margin. */
+  .hero__subheadline {
+    margin-bottom: 0;
+  }
+
+  .hero__signature {
+    margin-bottom: var(--space-3);
+  }
 }
 
 .hero__avatar {
@@ -963,17 +1020,18 @@ p {
   vertical-align: middle;
 }
 
-.now__body {
+/* Prose block shared by the Now and Colophon sections. */
+.section__body {
   max-width: 40rem;
   font-size: 1.0625rem;
   color: var(--text-soft);
 }
 
-.now__body p + p {
+.section__body p + p {
   margin-top: var(--space-4);
 }
 
-.now__links {
+.section__links {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-4);
