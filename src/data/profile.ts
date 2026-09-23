@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ============================================================================
  *  这是你更新网站时【唯一需要修改】的文件。
  *
@@ -378,7 +378,7 @@ export const colophon = {
      content lives in one data file, kept apart from the layout, so writing
      never means touching markup.`,
 
-    `The whole page comes in well under 60 KB including the avatar. The
+    `The whole page comes in about 60 KB including the avatar. The
      background is three soft radial gradients that animate transform only —
      the compositor can move those on the GPU, unlike animating
      background-position. The handful of lines of JavaScript exist for one
