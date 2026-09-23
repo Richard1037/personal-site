@@ -1118,20 +1118,35 @@ p {
   position: relative;
 }
 
-/* The dot on the timeline rail. */
-.timeline__item::before {
-  content: "";
+/* Marker on the timeline rail.
+   Rows whose kind has an icon show the icon; the rest keep a plain dot, so a
+   new entry never ends up with no marker at all.
+   `left` pulls the marker half its own width back from the item, which centres
+   it exactly on the rail. */
+.timeline__marker {
   position: absolute;
-  left: calc(-1 * var(--space-6) - 0.3125rem);
-  top: 0.5rem;
-  width: 0.625rem;
-  height: 0.625rem;
-  border-radius: 50%;
-  background-color: var(--bg);
-  border: 2px solid var(--text-faint);
+  left: calc(-1 * var(--space-6) - 0.5rem);
+  top: 0.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  font-size: 1.05rem;
+  color: var(--accent);
 }
 
-.timeline__item[data-kind="work"]::before {
+/* The dot, used only when no icon is configured for the kind. */
+.timeline__marker:not(.timeline__marker--icon)::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  border: 2px solid var(--text-faint);
+  background-color: var(--bg);
+}
+
+.timeline__item[data-kind='work'] .timeline__marker:not(.timeline__marker--icon)::before {
   border-color: var(--accent);
 }
 
@@ -1262,8 +1277,8 @@ p {
     padding-left: var(--space-5);
     gap: var(--space-5);
   }
-  .timeline__item::before {
-    left: calc(-1 * var(--space-5) - 0.3125rem);
+  .timeline__marker {
+    left: calc(-1 * var(--space-5) - 0.5rem);
   }
   .site-header__inner {
     gap: var(--space-2);

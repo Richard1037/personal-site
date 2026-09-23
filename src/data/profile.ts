@@ -336,7 +336,8 @@ export const experiences: Experience[] = [
     kind: 'education',
     title: 'BSc in Artificial Intelligence',
     org: 'Gaoling School of Artificial Intelligence, Renmin University of China',
-    period: '2026 – 2030 (expected)',
+    // 开放区间：毕业年份还没确定，所以只写起点
+    period: '2026 –',
     description: `Coursework in mathematics, programming and the foundations of machine
       learning, alongside self-directed work on web tools.`,
     tags: ['Beijing'],
@@ -347,7 +348,7 @@ export const experiences: Experience[] = [
     kind: 'competition',
     title: 'Competitive programming',
     org: 'NOIP · WC · NOI',
-    period: '2024 – 2025',
+    period: '2022 – 2026',
     description: `Two-time NOIP first prize, plus bronze at the national winter camp and
       the national finals. I don't compete any more — what I kept from it is a working
       knowledge of the algorithms and data structures on the NOI syllabus, everything

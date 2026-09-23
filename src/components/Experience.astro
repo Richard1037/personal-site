@@ -1,5 +1,6 @@
 ---
 import { experiences, type ExperienceKind } from '../data/profile';
+import Icon from './Icon.astro';
 
 // Human-readable label for each experience type.
 const kindLabels: Record<ExperienceKind, string> = {
@@ -8,6 +9,16 @@ const kindLabels: Record<ExperienceKind, string> = {
   competition: 'Competition',
   award: 'Award',
   education: 'Education',
+};
+
+/**
+ * 每种经历配一个图标（对应 src/data/icons.ts 里的键）。
+ * 没有配到图标的类型会自动退回成一个小圆点，所以这里可以按需慢慢补。
+ * 想给实习/科研/奖项也配图标，在 icons.ts 里加三个图标再写进这个表即可。
+ */
+const kindIcons: Partial<Record<ExperienceKind, string>> = {
+  education: 'cap',
+  competition: 'trophy',
 };
 
 // Rendered in the order given in src/data/profile.ts — sort it there.
@@ -21,6 +32,14 @@ const kindLabels: Record<ExperienceKind, string> = {
     {
       experiences.map((item) => (
         <article class="timeline__item" data-kind={item.kind}>
+          {/* 时间线轨道上的标记：有图标就用图标，没有就用圆点 */}
+          <span
+            class:list={['timeline__marker', kindIcons[item.kind] && 'timeline__marker--icon']}
+            aria-hidden="true"
+          >
+            <Icon name={kindIcons[item.kind]} />
+          </span>
+
           <div class="timeline__header">
             <h3 class="timeline__title">{item.title}</h3>
             <span class="timeline__org">{item.org}</span>
