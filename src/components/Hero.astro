@@ -5,38 +5,53 @@ import ContactLink from './ContactLink.astro';
 // 首屏显示前 3 个联系方式。想改变首屏展示哪些，调整 profile.ts 里
 // contactLinks 的顺序即可，这里不用改。
 const heroLinks = contactLinks.slice(0, 3);
+const hasFacts = profile.facts.length > 0;
 ---
 
 <section class="hero container" id="top">
-  <h1 class="hero__name">
-    {profile.name}
-    {profile.nameLocal && <span class="hero__name-local">{profile.nameLocal}</span>}
-  </h1>
+  <div class="hero__grid">
+    <!-- 左栏：姓名、签名、一句话介绍、联系方式 -->
+    <div class="hero__intro">
+      <h1 class="hero__name">
+        {profile.name}
+        {profile.nameLocal && <span class="hero__name-local">{profile.nameLocal}</span>}
+      </h1>
 
-  {profile.signature && <p class="hero__signature">{profile.signature}</p>}
+      {profile.signature && <p class="hero__signature">{profile.signature}</p>}
+      <p class="hero__subheadline">{profile.subheadline}</p>
 
-  <p class="hero__headline">{profile.headline}</p>
-  <p class="hero__subheadline">{profile.subheadline}</p>
+      {
+        profile.status && (
+          <p class="hero__status">
+            <span class="status-dot" aria-hidden="true" />
+            {profile.status}
+          </p>
+        )
+      }
 
-  <div class="hero__meta">
-    <span class="hero__meta-item">{profile.location}</span>
+      {
+        heroLinks.length > 0 && (
+          <div class="hero__actions">
+            {heroLinks.map((link, index) => (
+              <ContactLink link={link} variant={index === 0 ? 'primary' : 'default'} />
+            ))}
+          </div>
+        )
+      }
+    </div>
+
+    <!-- 右栏：分类信息卡。内容与增减都在 profile.ts 的 facts 里。 -->
     {
-      profile.status && (
-        <span class="hero__meta-item">
-          <span class="status-dot" aria-hidden="true" />
-          {profile.status}
-        </span>
+      hasFacts && (
+        <dl class="facts">
+          {profile.facts.map((fact) => (
+            <div class="facts__row">
+              <dt class="facts__label">{fact.label}</dt>
+              <dd class="facts__value">{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
       )
     }
   </div>
-
-  {
-    heroLinks.length > 0 && (
-      <div class="hero__actions">
-        {heroLinks.map((link, index) => (
-          <ContactLink link={link} variant={index === 0 ? 'primary' : 'default'} />
-        ))}
-      </div>
-    )
-  }
 </section>

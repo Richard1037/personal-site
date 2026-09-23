@@ -37,7 +37,10 @@
   --l-accent: #2c5ce6;
   --l-accent-soft: #eef2fe;
   --l-accent-contrast: #ffffff;
-  --l-grid: rgba(21, 23, 28, 0.055);
+  /* Background aurora — three hues so the drift reads as colour, not haze. */
+  --l-glow-1: rgba(44, 92, 230, 0.075);
+  --l-glow-2: rgba(122, 78, 220, 0.06);
+  --l-glow-3: rgba(0, 158, 158, 0.055);
 
   /* Dark */
   --d-bg: #0e1013;
@@ -51,7 +54,9 @@
   --d-accent: #7ea2ff;
   --d-accent-soft: #1a2133;
   --d-accent-contrast: #0e1013;
-  --d-grid: rgba(233, 235, 239, 0.08);
+  --d-glow-1: rgba(108, 148, 255, 0.15);
+  --d-glow-2: rgba(152, 112, 255, 0.12);
+  --d-glow-3: rgba(56, 200, 190, 0.10);
 
   /* --- Resolved tokens: light by default --------------------------------- */
   --bg: var(--l-bg);
@@ -65,9 +70,9 @@
   --accent: var(--l-accent);
   --accent-soft: var(--l-accent-soft);
   --accent-contrast: var(--l-accent-contrast);
-  --grid-line: var(--l-grid);
-
-  --grid-size: 3rem;
+  --glow-1: var(--l-glow-1);
+  --glow-2: var(--l-glow-2);
+  --glow-3: var(--l-glow-3);
 
   color-scheme: light;
 
@@ -124,7 +129,9 @@
     --accent: var(--d-accent);
     --accent-soft: var(--d-accent-soft);
     --accent-contrast: var(--d-accent-contrast);
-    --grid-line: var(--d-grid);
+    --glow-1: var(--d-glow-1);
+    --glow-2: var(--d-glow-2);
+    --glow-3: var(--d-glow-3);
     color-scheme: dark;
   }
 }
@@ -141,7 +148,9 @@
   --accent: var(--d-accent);
   --accent-soft: var(--d-accent-soft);
   --accent-contrast: var(--d-accent-contrast);
-  --grid-line: var(--d-grid);
+  --glow-1: var(--d-glow-1);
+  --glow-2: var(--d-glow-2);
+  --glow-3: var(--d-glow-3);
   color-scheme: dark;
 }
 
@@ -176,10 +185,11 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   Background: a slowly breathing grid
-   Drawn on a fixed pseudo-element sitting behind the page. Only `opacity`
-   animates, which the compositor handles cheaply — so covering the whole
-   viewport costs effectively nothing, unlike animating background-position.
+   Background: slow aurora drift
+   Three soft radial gradients on a fixed pseudo-element sitting behind the
+   page. Only `transform` animates, so the compositor moves it on the GPU —
+   covering the whole viewport costs almost nothing, unlike animating
+   background-position. Colours live in --glow-* in the palette above.
    -------------------------------------------------------------------------- */
 
 body::before {
@@ -188,27 +198,29 @@ body::before {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-  background-size: var(--grid-size) var(--grid-size);
-  animation: grid-breathe 16s ease-in-out infinite;
+  background-image:
+    radial-gradient(42rem 30rem at 16% 10%, var(--glow-1), transparent 68%),
+    radial-gradient(36rem 28rem at 86% 6%, var(--glow-2), transparent 68%),
+    radial-gradient(48rem 34rem at 68% 94%, var(--glow-3), transparent 70%);
+  /* Scaling past 1 guarantees the drift can never expose an edge. */
+  animation: aurora-drift 34s ease-in-out infinite;
 }
 
-/* Lift page content above the grid. The header is deliberately not listed: it
-   is already sticky and carries a higher z-index of its own. */
+/* Lift page content above the background. The header is deliberately not
+   listed: it is already sticky and carries a higher z-index of its own. */
 main,
 .site-footer {
   position: relative;
   z-index: 1;
 }
 
-@keyframes grid-breathe {
+@keyframes aurora-drift {
   0%,
   100% {
-    opacity: 0.35;
+    transform: translate3d(-1.5%, -1%, 0) scale(1.06);
   }
   50% {
-    opacity: 1;
+    transform: translate3d(1.5%, 1.5%, 0) scale(1.12);
   }
 }
 
@@ -463,10 +475,19 @@ p {
   letter-spacing: 0;
 }
 
-.hero__headline {
-  font-size: 1.0625rem;
-  color: var(--text-soft);
-  margin-bottom: var(--space-4);
+/* Two columns on wide screens: the intro reads on the left and the categorised
+   fact cards sit alongside it. Everything stacks on narrow screens. */
+.hero__grid {
+  display: grid;
+  gap: var(--space-7);
+}
+
+@media (min-width: 52rem) {
+  .hero__grid {
+    grid-template-columns: minmax(0, 1.55fr) minmax(13rem, 1fr);
+    align-items: start;
+    gap: var(--space-8);
+  }
 }
 
 .hero__subheadline {
@@ -475,20 +496,51 @@ p {
   margin-bottom: var(--space-6);
 }
 
-/* Small metadata row: location, availability status. */
-.hero__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2) var(--space-5);
-  font-size: 0.875rem;
-  color: var(--text-faint);
-  margin-bottom: var(--space-6);
-}
-
-.hero__meta-item {
+/* Optional availability line, shown above the contact buttons. */
+.hero__status {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
+  font-size: 0.875rem;
+  color: var(--text-faint);
+  margin-bottom: var(--space-5);
+}
+
+/* --------------------------------------------------------------------------
+   Fact cards — the categorised half of the hero.
+   A definition list rendered as one card with hairline dividers: the 1px grid
+   gap lets the card's own colour show through between rows.
+   -------------------------------------------------------------------------- */
+
+.facts {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--border);
+  overflow: hidden;
+}
+
+.facts__row {
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--surface);
+}
+
+.facts__label {
+  margin-bottom: 0.15rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.facts__value {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--text);
 }
 
 /* Pulsing dot to draw the eye to "open to internships". */

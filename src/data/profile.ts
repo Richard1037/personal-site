@@ -70,31 +70,42 @@ export interface SkillGroup {
    1. 基本信息
    ========================================================================== */
 
+/** 首屏信息卡：一个「类别 -> 内容」对。 */
+export interface Fact {
+  /** 类别标签，例如 "Studying" */
+  label: string;
+  /** 内容，例如 "BSc in Artificial Intelligence" */
+  value: string;
+}
+
 export const profile = {
   /** 显示为页面主标题 */
   name: 'Richard Wang',
   /** 中文名，显示在主标题旁边的小字；不需要就设为 '' */
   nameLocal: '汪宏睿',
 
-  /** 学位 + 学校，显示在姓名下方 */
-  headline: 'BSc in Artificial Intelligence · Renmin University of China',
+  /** 个性签名，显示在姓名正下方 */
+  signature: 'But I still think they are flowers',
 
   /** 你的"一句话价值主张"——全站最重要的一句。 */
   subheadline:
     'First-year AI student in Beijing, building small dependency-free web tools while I work out where in AI to go deep.',
 
   /**
-   * 个性签名，显示在姓名正下方。
-   * 注意：你给的是 "shill"，我按拼写错误处理成了 "still"。如果原意就是 shill，
-   * 改回来即可。
+   * 首屏右侧的分类信息卡。每项是「类别 -> 内容」。
+   * 增删卡片只改这个数组即可，布局会自动适应：
+   * 宽屏时排在右侧一列，窄屏时堆到内容下方。
    */
-  signature: 'But I still think they are flowers',
-
-  location: 'Beijing, China',
+  facts: [
+    { label: 'Studying', value: 'BSc in Artificial Intelligence' },
+    { label: 'At', value: 'Renmin University of China' },
+    { label: 'Based in', value: 'Beijing, China' },
+    { label: 'Interested in', value: 'Algorithms and AI' },
+  ],
 
   /**
-   * 留空则不显示。将来想开放实习机会就填，例如：
-   * 'Open to Summer 2027 internships'
+   * 状态提示。留空则不显示；填了会在首屏联系方式上方显示一个绿点 + 文字，
+   * 例如 'Open to Summer 2027 internships'
    */
   status: '',
 
@@ -286,6 +297,10 @@ export const contactLinks: Link[] = [
   // 首屏只显示前 3 个，所以 Blog 出现在底部的 Contact 区
   { label: 'Blog', url: 'https://www.cnblogs.com/Richardwhr', hint: 'cnblogs.com/Richardwhr' },
 ];
+
+/** 用于 <title> 和分享卡片的副标题（不显示在页面上）。 */
+export const seoHeadline =
+  'BSc in Artificial Intelligence · Renmin University of China';
 
 /** 搜索引擎和社交平台分享时显示的描述。 */
 export const siteDescription =
