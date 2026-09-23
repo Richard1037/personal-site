@@ -95,7 +95,7 @@ export const profile = {
   nameLocal: '汪宏睿',
 
   /** 个性签名，显示在姓名正下方 */
-  signature: 'But I still think they are flowers',
+  signature: "But I still say… they're flowers.",
 
   /** 签名出处。留空则不显示。 */
   signatureSource: 'Flower Dance, DJ Okawari',
@@ -121,6 +121,7 @@ export const profile = {
     { label: 'At', value: 'Renmin University of China' },
     { label: 'Based in', value: 'Beijing, China' },
     { label: 'Interested in', value: 'Algorithms and AI' },
+    { label: 'Personality', value: 'ESTJ' },
   ],
 
   /**

@@ -315,19 +315,30 @@ p {
   border-top: 1px solid var(--border);
 }
 
-/* Small uppercase label above a section heading. */
+/* Section label: an accent-coloured word followed by a rule that fades out to
+   the right. Calmer than a coloured background, and it frames the heading so
+   each section reads as a designed block rather than a run of text. */
 .eyebrow {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
   font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-weight: 650;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-faint);
-  margin-bottom: var(--space-2);
+  color: var(--accent);
+}
+
+.eyebrow::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--border), transparent);
 }
 
 .section__title {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   margin-bottom: var(--space-5);
 }
 
@@ -1080,8 +1091,21 @@ p {
 }
 
 .contact__title {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   margin-bottom: var(--space-3);
+}
+
+/* The contact block is centred, so its label gets a rule on both sides
+   instead of only on the right. */
+.contact .eyebrow::before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to left, var(--border), transparent);
+}
+
+.contact .eyebrow::after {
+  background: linear-gradient(to right, var(--border), transparent);
 }
 
 .contact__text {
